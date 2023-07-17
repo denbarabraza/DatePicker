@@ -5,7 +5,6 @@ import dts from 'rollup-plugin-dts';
 import packageJson from './package.json' assert { type: 'json' };
 import babel from '@rollup/plugin-babel';
 import alias from '@rollup/plugin-alias';
-import path from '@babel/core/lib/vendor/import-meta-resolve.js';
 
 export default [
   {
@@ -42,7 +41,8 @@ export default [
         ],
       }),
       alias({
-        '@/*': path.resolve(__dirname, 'src'),
+        resolve: ['.js', '.jsx', '.ts', '.tsx'],
+        entries: [{ find: 'src', replacement: './src' }],
       }),
       resolve(),
       commonjs(),
