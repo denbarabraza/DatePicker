@@ -5,6 +5,7 @@ import dts from 'rollup-plugin-dts';
 import packageJson from './package.json' assert { type: 'json' };
 import babel from '@rollup/plugin-babel';
 import alias from '@rollup/plugin-alias';
+import svg from 'rollup-plugin-svg';
 
 export default [
   {
@@ -30,6 +31,7 @@ export default [
         entries: [{ find: 'src', replacement: './src' }],
       }),
       resolve(),
+      svg(),
       commonjs(),
       typescript({ tsconfig: './tsconfig.json' }),
     ],
