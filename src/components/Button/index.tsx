@@ -1,9 +1,11 @@
 import React from 'react';
 
+import { ButtonItem } from '@/components/Button/styled';
+
 export interface IButton {
   label: string;
 }
 
 export const Button = (props: IButton) => {
-  return <button type='button'>{props.label}</button>;
+  return <ButtonItem type='button'>{props.label}</ButtonItem>;
 };
