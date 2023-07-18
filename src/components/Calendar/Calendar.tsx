@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 
-import CalendarHeader from '@/components/CalendarHeader';
+import CalendarHeader from '@/components/CalendarHeader/CalendarHeader';
 
 type Props = {
   initialView: 'week' | 'month' | 'year';

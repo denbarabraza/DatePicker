@@ -5,7 +5,9 @@ import dts from 'rollup-plugin-dts';
 import packageJson from './package.json' assert { type: 'json' };
 import babel from '@rollup/plugin-babel';
 import alias from '@rollup/plugin-alias';
-import svg from 'rollup-plugin-svg';
+import external from 'rollup-plugin-peer-deps-external';
+import postcss from 'rollup-plugin-postcss';
+import { terser } from 'rollup-plugin-terser';
 
 export default [
   {
@@ -30,15 +32,20 @@ export default [
         resolve: ['.js', '.jsx', '.ts', '.tsx'],
         entries: [{ find: 'src', replacement: './src' }],
       }),
+      postcss({
+        modules: true,
+      }),
       resolve(),
-      svg(),
       commonjs(),
       typescript({ tsconfig: './tsconfig.json' }),
+      external(),
+      terser(),
     ],
   },
   {
     input: 'dist/esm/types/index.d.ts',
     output: [{ file: 'dist/index.d.ts', format: 'esm' }],
+    external: ['styled-components'],
     plugins: [dts()],
   },
 ];

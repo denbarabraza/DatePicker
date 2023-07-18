@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 
-import Calendar from '@/components/Calendar';
+import Calendar from '@/components/Calendar/Calendar';
 
 const Input = styled.input`
   display: block;
@@ -32,14 +32,14 @@ export interface IDatePicker {
   onChange: (date: Date) => void;
 }
 
-const DatePicker: React.FC<IDatePicker> = ({ selectedDate, onChange }) => {
+export const DatePicker: React.FC<IDatePicker> = ({ selectedDate, onChange }) => {
   const [showCalendar, setShowCalendar] = useState(false);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const dateString = event.target.value;
     const date = new Date(dateString);
 
-    if (!isNaN(date.getTime())) {
+    if (!Number.isNaN(date.getTime())) {
       onChange(date);
     }
   };
