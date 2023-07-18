@@ -1,20 +1,17 @@
 import { useState } from 'react';
 import ReactDOM from 'react-dom';
+import dayjs, { Dayjs } from 'dayjs';
 
-import DatePicker from './components/DatePicker/DatePicker';
+import { DatePicker } from './components/DatePicker';
 
 const App = () => {
-  const [selectedDate, setSelectedDate] = useState<Date>();
+  const [date, setDate] = useState(dayjs());
 
-  const handleDateChange = (date: Date) => {
-    setSelectedDate(date);
+  const handleDateChange = (date: Dayjs) => {
+    setDate(date);
   };
 
-  return (
-    <div>
-      <DatePicker selectedDate={selectedDate} onChange={handleDateChange} />
-    </div>
-  );
+  return <DatePicker selectedDate={date} onChange={handleDateChange} />;
 };
 
 ReactDOM.render(<App />, document.getElementById('root'));
