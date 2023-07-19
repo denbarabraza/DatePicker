@@ -5,16 +5,16 @@ export const SelectorItem = styled.div`
   align-items: center;
   justify-content: space-between;
 
-  height: 42px;
+  height: 30px;
+  width: 100%;
 
   border-bottom: 1px solid #b3b3b3;
-  margin-bottom: 8px;
 `;
 
 export const SelectorDateItem = styled.div`
-  font-weight: 700;
-  font-size: 14px;
-  line-height: 19px;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 10px;
 `;
 
 export const LeftSelectorIcon = styled.div`

@@ -1,6 +1,7 @@
+import React from 'react';
 import { Dayjs } from 'dayjs';
 
 export interface IDatePicker {
   selectedDate: Dayjs;
-  onChange: (newDate: Dayjs) => void;
+  onChangeDate: React.Dispatch<React.SetStateAction<Dayjs>>;
 }

@@ -30,7 +30,9 @@ export const CalendarRow = styled.div`
 
 export const DayCell = styled.div<{
   isActive: boolean;
-  isCurrentMonth: boolean | string;
+  isCurrentMonth: boolean;
+  isWeekend: boolean;
+  isToday: boolean;
 }>`
   display: flex;
   align-items: center;
@@ -58,6 +60,19 @@ export const DayCell = styled.div<{
   ${({ isCurrentMonth }) =>
     !isCurrentMonth &&
     css`
-      color: #d1d1d1;
+      opacity: 0.3;
+    `}
+
+  ${({ isWeekend }) =>
+    isWeekend &&
+    css`
+      color: #ef4e4e;
+    `}
+
+  ${({ isToday }) =>
+    isToday &&
+    css`
+      border: 1px dashed grey;
+      border-radius: 50%;
     `}
 `;

@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import { ChevronDownIcon } from '@/assets/ChevronDownIcon';
 import { IDatePickerSelectorProps } from '@/components/DatePickerSelector/interface';
-import { DisplayYearMonths } from '@/components/DisplayMonths/DisplayYearMonths';
 import { changeDateMonth } from '@/utils/utils';
 
 import {
@@ -14,13 +13,12 @@ import {
 
 export const DatePickerSelector: React.FC<IDatePickerSelectorProps> = ({
   shownDate,
-  setShownDate,
+  onChangeDate,
   setShowMonthYear,
-  showMonthYear,
 }) => {
   const handleIconClick = (isNextMonth: boolean) => {
     return () => {
-      setShownDate(changeDateMonth(shownDate, isNextMonth));
+      onChangeDate(changeDateMonth(shownDate, isNextMonth));
     };
   };
 
@@ -29,18 +27,9 @@ export const DatePickerSelector: React.FC<IDatePickerSelectorProps> = ({
       <LeftSelectorIcon onClick={handleIconClick(false)}>
         <ChevronDownIcon />
       </LeftSelectorIcon>
-      {showMonthYear ? (
-        <DisplayYearMonths
-          shownDate={shownDate}
-          setShownDate={setShownDate}
-          setShowMonthYear={setShowMonthYear}
-        />
-      ) : (
-        <SelectorDateItem onClick={() => setShowMonthYear(true)}>
-          {shownDate?.format('MMMM YYYY')}
-        </SelectorDateItem>
-      )}
-
+      <SelectorDateItem onClick={setShowMonthYear}>
+        {shownDate?.format('MMMM YYYY')}
+      </SelectorDateItem>
       <RightSelectorIcon onClick={handleIconClick(true)}>
         <ChevronDownIcon />
       </RightSelectorIcon>

@@ -1,62 +1,43 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC } from 'react';
 import { Dayjs } from 'dayjs';
 
-import { MonthSelector } from '@/components/DisplayMonths/MonthSelector/MonthSelector';
-import { YearSelector } from '@/components/DisplayMonths/YearSelector/YearSelector';
+import { CustomSelect } from '@/components/CustomSelect';
+import { SelectEnum } from '@/components/CustomSelect/interface';
 
 import { Wrapper } from './styled';
 
 interface IDisplayYearMonths {
   shownDate: Dayjs;
-  setShownDate: React.Dispatch<React.SetStateAction<Dayjs>>;
+  onChangeDate: React.Dispatch<React.SetStateAction<Dayjs>>;
   setShowMonthYear: (value: boolean) => void;
-}
-
-interface IYearMonthData {
-  year?: number;
-  month?: number;
 }
 
 export const DisplayYearMonths: FC<IDisplayYearMonths> = ({
   shownDate,
-  setShownDate,
+  onChangeDate,
   setShowMonthYear,
 }) => {
-  const [yearMonthData, setYearMonthData] = useState<IYearMonthData | null>(null);
   const handleMonthSelect = (month: number) => {
-    if (month) {
-      setYearMonthData(prev => ({
-        ...prev,
-        month,
-      }));
-    }
+    onChangeDate(shownDate?.month(month));
+    setShowMonthYear(false);
   };
 
   const handleYearSelect = (year: number) => {
-    if (year) {
-      setYearMonthData(prev => ({
-        ...prev,
-        year,
-      }));
-    }
+    onChangeDate(shownDate?.year(year));
   };
-
-  useEffect(() => {
-    if (yearMonthData?.year && yearMonthData.month) {
-      setShownDate(shownDate?.month(yearMonthData.month));
-      setShownDate(shownDate?.year(yearMonthData?.year));
-      setShowMonthYear(false);
-    }
-  }, [yearMonthData]);
-
-  useEffect(() => {
-    setYearMonthData(null);
-  }, []);
 
   return (
     <Wrapper>
-      <MonthSelector selectedMonth={shownDate?.month()} onSelect={handleMonthSelect} />
-      <YearSelector selectedYear={shownDate?.year()} onSelect={handleYearSelect} />
+      <CustomSelect
+        type={SelectEnum.Year}
+        selectedValue={shownDate?.year()}
+        onSelect={handleYearSelect}
+      />
+      <CustomSelect
+        type={SelectEnum.Month}
+        selectedValue={shownDate?.month()}
+        onSelect={handleMonthSelect}
+      />
     </Wrapper>
   );
 };

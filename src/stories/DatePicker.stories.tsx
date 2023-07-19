@@ -11,18 +11,16 @@ export default {
 } as Meta<typeof DatePicker>;
 
 const Template: StoryFn<typeof DatePicker> = (args: IDatePicker) => {
-  const [date, setDate] = useState(dayjs());
+  const [date, setDate] = useState<Dayjs>(dayjs());
 
   const handleDateChange = (date: Dayjs) => {
-    if (date) {
-      setDate(date);
-    }
+    setDate(date);
   };
 
   return (
     <>
-      <h4 className='app__title'>Picked Date: {date.format('DD - MMMM - YYYY')}</h4>
-      <DatePicker {...args} selectedDate={date} onChange={handleDateChange} />
+      <h4 className='app__title'>Picked Date: {date?.format('DD - MMMM - YYYY')}</h4>
+      <DatePicker {...args} selectedDate={date} onChangeDate={handleDateChange} />
     </>
   );
 };

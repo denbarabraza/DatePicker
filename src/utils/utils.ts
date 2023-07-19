@@ -19,6 +19,8 @@ export interface ICalendarCell {
   text: string;
   value: Dayjs;
   isCurrentMonth?: boolean;
+  isWeekend?: boolean;
+  isToday?: boolean;
 }
 
 export function getCalendarRows(
@@ -44,40 +46,48 @@ export function getCalendarRows(
   const days = endOfMonth.diff(startOfMonth, 'days') + 1;
   const calendarDays: ICalendarCell[] = [];
 
-  const previousMonthDays = startOfMonth.day() - startOfWeek;
+  const previousMonthDays = Math.min(startOfMonth.day() - startOfWeek);
   const previousMonthDate = startOfMonth.subtract(previousMonthDays, 'day');
 
   for (let i = 0; i < previousMonthDays; i++) {
     const day = previousMonthDate.add(i, 'day');
+    const isWeekend = day.day() === 0 || day.day() === 6;
 
     calendarDays.push({
       text: day.format('D'),
       value: day,
       isCurrentMonth: false,
+      isWeekend,
     });
   }
 
   for (let i = 0; i < days; i++) {
     const day = startOfMonth.add(i, 'day');
     const isCurrentMonth = day.isSame(date, 'month');
+    const isWeekend = day.day() === 0 || day.day() === 6;
+    const isToday = day.isSame(dayjs(), 'day');
 
     calendarDays.push({
       text: day.format('D'),
       value: day,
       isCurrentMonth,
+      isWeekend,
+      isToday,
     });
   }
 
-  const nextMonthDays = 42 - calendarDays.length;
+  const nextMonthDays = Math.min(42 - calendarDays.length, 0);
   const nextMonthDate = endOfMonth.add(1, 'day');
 
   for (let i = 0; i < nextMonthDays; i++) {
     const day = nextMonthDate.add(i, 'day');
+    const isWeekend = day.day() === 0 || day.day() === 6;
 
     calendarDays.push({
       text: day.format('D'),
       value: day,
       isCurrentMonth: false,
+      isWeekend,
     });
   }
 
@@ -90,6 +100,12 @@ export function getCalendarRows(
   return rows;
 }
 
-export const dayjsLocalized = (date: string): Dayjs => {
-  return dayjs(date);
+export const range = (start: number, end: number) => {
+  const result = [];
+
+  for (let i = start; i <= end; i++) {
+    result.push(i);
+  }
+
+  return result;
 };

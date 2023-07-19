@@ -3,7 +3,6 @@ import { Dayjs } from 'dayjs';
 
 export interface IDatePickerSelectorProps {
   shownDate: Dayjs;
-  setShownDate: React.Dispatch<React.SetStateAction<Dayjs>>;
-  showMonthYear: boolean;
-  setShowMonthYear: (value: boolean) => void;
+  onChangeDate: React.Dispatch<React.SetStateAction<Dayjs>>;
+  setShowMonthYear: () => void;
 }
