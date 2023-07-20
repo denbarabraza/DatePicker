@@ -8,7 +8,7 @@ import { Wrapper } from './styled';
 
 interface IDisplayYearMonths {
   shownDate: Dayjs;
-  onChangeDate: React.Dispatch<React.SetStateAction<Dayjs>>;
+  onChangeDate: (date: Dayjs) => void;
   setShowMonthYear: (value: boolean) => void;
 }
 

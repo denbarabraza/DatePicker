@@ -24,7 +24,7 @@ export const GlobalStyle = createGlobalStyle`
     font-weight: 600;
     src: url('https://fonts.gstatic.com/s/dosis/v27/HhyJU5sn9vOmLxNkIwRSjTVNWLEJ6bQV3A.ttf') format('truetype');
   }
-  
+
   body {
     font-family: "Dosis", sans-serif;
   }
@@ -41,4 +41,26 @@ export const DatePickerBlock = styled.div`
   border-radius: 5px;
 
   max-width: 320px;
+`;
+
+export const InputFilterBlock = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  gap: 5px;
+  width: 100%;
+`;
+
+export const FilterItemIcon = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  cursor: pointer;
+
+  &:hover {
+    transform: scale(1.2);
+  }
 `;

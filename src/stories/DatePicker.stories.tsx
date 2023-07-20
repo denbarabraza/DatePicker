@@ -19,7 +19,7 @@ const Template: StoryFn<typeof DatePicker> = (args: IDatePicker) => {
 
   return (
     <>
-      <h4 className='app__title'>Picked Date: {date?.format('DD - MMMM - YYYY')}</h4>
+      <h4>Picked Date: {date?.format('DD - MMMM - YYYY')}</h4>
       <DatePicker {...args} selectedDate={date} onChangeDate={handleDateChange} />
     </>
   );

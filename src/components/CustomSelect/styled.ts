@@ -32,7 +32,7 @@ export const OptionsContainer = styled.div<{ open: boolean }>`
   left: 0;
   width: 100%;
   z-index: 5;
-  max-height: 100px;
+  max-height: 250px;
   overflow-y: auto;
   color: black;
   background-color: white;

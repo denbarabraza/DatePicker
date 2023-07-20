@@ -5,9 +5,9 @@ import dayjs, { Dayjs } from 'dayjs';
 import { DatePicker } from './components/DatePicker';
 
 const App = () => {
-  const [date, setDate] = useState<Dayjs | null>(dayjs());
+  const [date, setDate] = useState<Dayjs>(dayjs());
 
-  const handleDateChange = (date: Dayjs | null) => {
+  const handleDateChange = (date: Dayjs) => {
     setDate(date);
   };
 

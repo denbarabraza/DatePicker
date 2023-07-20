@@ -1,6 +1,9 @@
 import dayjs, { Dayjs } from 'dayjs';
 import isoWeek from 'dayjs/plugin/isoWeek';
 
+import { IHolidays, IHolidaysResponse } from '@/components/DatePicker/interface';
+import { WeekendStatusEnum } from '@/components/Toggle/types';
+
 dayjs.extend(isoWeek);
 
 export function changeDateMonth(date: Dayjs, isNextMonth: boolean): Dayjs {
@@ -19,13 +22,17 @@ export interface ICalendarCell {
   text: string;
   value: Dayjs;
   isCurrentMonth?: boolean;
-  isWeekend?: boolean;
+  isWeekend: boolean;
   isToday?: boolean;
+  isHoliday?: boolean;
+  holidayName?: string;
 }
 
 export function getCalendarRows(
   date: Dayjs,
   startOfWeek: number,
+  holidays: IHolidays[] | undefined,
+  statusWeekends: WeekendStatusEnum,
 ): Array<ICalendarCell[]> {
   let startOfMonth = date.startOf('month').day(startOfWeek).startOf('day');
 
@@ -66,6 +73,9 @@ export function getCalendarRows(
     const isCurrentMonth = day.isSame(date, 'month');
     const isWeekend = day.day() === 0 || day.day() === 6;
     const isToday = day.isSame(dayjs(), 'day');
+    const holiday = holidays?.find(holiday => {
+      return holiday.date.iso === day.format('YYYY-MM-DD');
+    });
 
     calendarDays.push({
       text: day.format('D'),
@@ -73,6 +83,8 @@ export function getCalendarRows(
       isCurrentMonth,
       isWeekend,
       isToday,
+      isHoliday: !!holiday,
+      holidayName: holiday?.name,
     });
   }
 
@@ -97,7 +109,9 @@ export function getCalendarRows(
     rows.push(calendarDays.slice(i, i + 7));
   }
 
-  return rows;
+  return statusWeekends === WeekendStatusEnum.WithoutWeekEnds
+    ? rows.map(week => week.filter(day => !day.isWeekend))
+    : rows;
 }
 
 export const range = (start: number, end: number) => {
@@ -108,4 +122,11 @@ export const range = (start: number, end: number) => {
   }
 
   return result;
+};
+
+export const getDayOfWeek = (day: string): number => {
+  const daysOfWeek = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
+  const dayIndex = daysOfWeek.indexOf(day);
+
+  return dayIndex === -1 ? -1 : dayIndex;
 };

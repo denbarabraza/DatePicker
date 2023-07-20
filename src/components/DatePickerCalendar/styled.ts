@@ -9,23 +9,22 @@ export const CalendarHeader = styled.div`
   height: 50px;
 `;
 
-export const CalendarCell = styled.div`
+export const CalendarCell = styled.div<{ isStartOfWeek: boolean }>`
   padding: 4px;
-  width: 38px;
-  height: 38px;
-  margin: 0 2px;
-  border-radius: 50%;
+  width: 20px;
   display: flex;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
+  border-bottom: ${({ isStartOfWeek }) => (isStartOfWeek ? '1px solid #b3b3b3' : 'none')};
 `;
 
-export const CalendarRow = styled.div`
+export const CalendarRow = styled.div<{ withWeekends: boolean }>`
   width: 100%;
-  display: grid;
+  display: flex;
   justify-content: space-around;
   align-items: center;
-  grid-template-columns: repeat(7, 1fr);
+  grid-template-columns: repeat(${({ withWeekends }) => (withWeekends ? 7 : 5)}, 1fr);
 `;
 
 export const DayCell = styled.div<{
@@ -33,6 +32,7 @@ export const DayCell = styled.div<{
   isCurrentMonth: boolean;
   isWeekend: boolean;
   isToday: boolean;
+  isHoliday: boolean;
 }>`
   display: flex;
   align-items: center;
@@ -42,6 +42,7 @@ export const DayCell = styled.div<{
   border-radius: 50%;
   cursor: pointer;
   transition: background-color 0.2s ease-in-out;
+  width: 24px;
 
   &:hover {
     background-color: #e9e9e9;
@@ -54,7 +55,7 @@ export const DayCell = styled.div<{
   ${({ isActive }) =>
     isActive &&
     css`
-      background-color: #007bff;
+      background-color: #6d9fe8;
       color: #fff;
     `}
   ${({ isCurrentMonth }) =>
@@ -62,17 +63,54 @@ export const DayCell = styled.div<{
     css`
       opacity: 0.3;
     `}
-
   ${({ isWeekend }) =>
     isWeekend &&
     css`
       color: #ef4e4e;
     `}
-
   ${({ isToday }) =>
     isToday &&
     css`
       border: 1px dashed grey;
       border-radius: 50%;
     `}
+  ${({ isHoliday }) =>
+    isHoliday &&
+    css`
+      color: #39ea18;
+    `}
+`;
+
+export const TooltipBlock = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 10px;
+`;
+export const TooltipItem = styled.div`
+  font-size: 16px;
+  font-weight: 600;
+`;
+
+export const CircleMarker = styled.div`
+  display: flex;
+  align-items: center;
+  position: relative;
+  padding-left: 16px;
+
+  &::before {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    width: 8px;
+    height: 8px;
+    background-color: #39ea18;
+    border-radius: 50%;
+    margin-right: 8px;
+  }
 `;
