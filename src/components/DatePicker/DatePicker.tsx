@@ -7,6 +7,9 @@ import { DatePickerCalendar } from '@/components/DatePickerCalendar';
 import { DatePickerSelector } from '@/components/DatePickerSelector';
 import { DisplayFilter } from '@/components/DisplayFilter/DisplayFilter';
 import { DisplayYearMonths } from '@/components/DisplayMonths/DisplayYearMonths';
+import { ErrorBoundary } from '@/components/ErrorBoundary';
+import { ErrorFallback } from '@/components/ErrorBoundary/ErrorFallback';
+import { Theme } from '@/components/Theme';
 import { WeekendStatusEnum } from '@/components/Toggle/types';
 import { getDayOfWeek } from '@/utils/utils';
 
@@ -49,46 +52,50 @@ export const DatePicker: React.FC<IDatePicker> = ({ selectedDate, onChangeDate }
   }, [year]);
 
   return (
-    <DatePickerBlock>
-      <GlobalStyle />
-      <InputFilterBlock>
-        <CustomInput
-          date={selectedDate}
-          onChooseDate={onChangeDate}
-          placeholder='Choose Date (yyyy-mm-dd)'
-        />
-        <FilterItemIcon onClick={onClickShowFilter}>
-          <FilterIcon />
-        </FilterItemIcon>
-      </InputFilterBlock>
+    <ErrorBoundary fallback={<ErrorFallback />}>
+      <Theme>
+        <DatePickerBlock>
+          <GlobalStyle />
+          <InputFilterBlock>
+            <CustomInput
+              date={selectedDate}
+              onChooseDate={onChangeDate}
+              placeholder='Choose Date (yyyy-mm-dd)'
+            />
+            <FilterItemIcon onClick={onClickShowFilter}>
+              <FilterIcon />
+            </FilterItemIcon>
+          </InputFilterBlock>
 
-      <DatePickerSelector
-        shownDate={selectedDate}
-        onChangeDate={onChangeDate}
-        setShowMonthYear={onClickShowMonthYear}
-      />
-      {showMonthYear && (
-        <DisplayYearMonths
-          shownDate={selectedDate}
-          onChangeDate={onChangeDate}
-          setShowMonthYear={setShowMonthYear}
-        />
-      )}
-      <DatePickerCalendar
-        selectedDate={selectedDate}
-        shownDate={selectedDate}
-        onChangeDate={onChangeDate}
-        startOfWeek={startOfWeek}
-        setStartOfWeek={setNumberStartOfWeek}
-        holidays={holidays}
-        statusWeekends={statusWeekends}
-      />
-      {showFilter && (
-        <DisplayFilter
-          statusWeekends={statusWeekends}
-          setStatusWeekends={setStatusWeekends}
-        />
-      )}
-    </DatePickerBlock>
+          <DatePickerSelector
+            shownDate={selectedDate}
+            onChangeDate={onChangeDate}
+            setShowMonthYear={onClickShowMonthYear}
+          />
+          {showMonthYear && (
+            <DisplayYearMonths
+              shownDate={selectedDate}
+              onChangeDate={onChangeDate}
+              setShowMonthYear={setShowMonthYear}
+            />
+          )}
+          <DatePickerCalendar
+            selectedDate={selectedDate}
+            shownDate={selectedDate}
+            onChangeDate={onChangeDate}
+            startOfWeek={startOfWeek}
+            setStartOfWeek={setNumberStartOfWeek}
+            holidays={holidays}
+            statusWeekends={statusWeekends}
+          />
+          {showFilter && (
+            <DisplayFilter
+              statusWeekends={statusWeekends}
+              setStatusWeekends={setStatusWeekends}
+            />
+          )}
+        </DatePickerBlock>
+      </Theme>
+    </ErrorBoundary>
   );
 };

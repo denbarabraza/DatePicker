@@ -1,7 +1,9 @@
 import styled from 'styled-components';
 
+import { usedColors } from '@/theme/theme';
+
 export const Container = styled.div`
-  width: 150px;
+  width: ${({ theme }) => theme.valueInPx.px150};
   position: relative;
 `;
 
@@ -9,18 +11,20 @@ export const SelectedOption = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 10px;
-  border: 1px solid gray;
-  border-radius: 5px;
+  padding: ${({ theme }) => theme.valueInPx.px10};
+  border: ${({ theme }) => theme.valueInPx.px1} solid
+    ${({ theme }) => theme.usedColors.lightGray};
+  border-radius: ${({ theme }) => theme.valueInPx.px5};
   cursor: pointer;
 `;
 
 export const ArrowIcon = styled.div<{ open: boolean }>`
-  width: 0;
-  height: 0;
-  border-top: 5px solid gray;
-  border-left: 5px solid transparent;
-  border-right: 5px solid transparent;
+  width: ${({ theme }) => theme.valueInPx.px0};
+  height: ${({ theme }) => theme.valueInPx.px0};
+  border-top: ${({ theme }) => theme.valueInPx.px5} solid
+    ${({ theme }) => theme.usedColors.lightGray};
+  border-left: ${({ theme }) => theme.valueInPx.px5} solid transparent;
+  border-right: ${({ theme }) => theme.valueInPx.px5} solid transparent;
   transition: transform 0.2s ease-in-out;
 
   transform: ${({ open }) => (open ? 'rotate(180deg)' : 'rotate(0deg)')};
@@ -28,18 +32,17 @@ export const ArrowIcon = styled.div<{ open: boolean }>`
 
 export const OptionsContainer = styled.div<{ open: boolean }>`
   position: absolute;
-  top: 50px;
-  left: 0;
-  width: 100%;
+  top: ${({ theme }) => theme.valueInPx.px50};
+  left: ${({ theme }) => theme.valueInPx.px0};
+  width: ${({ theme }) => theme.valueInPercent.pr100};
   z-index: 5;
-  max-height: 250px;
+  max-height: ${({ theme }) => theme.valueInPx.px250};
   overflow-y: auto;
-  color: black;
-  background-color: white;
-  border: blue;
+  color: ${({ theme }) => theme.usedColors.black};
+  background-color: ${({ theme }) => theme.usedColors.white};
   border-top: none;
-  border-radius: 0 0 5px 5px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+  border-radius: ${({ theme }) => theme.valueInPx.px5};
+  box-shadow: 0 2px 4px ${({ theme }) => theme.usedColors.blackOpacity};
   opacity: ${({ open }) => (open ? 1 : 0)};
   visibility: ${({ open }) => (open ? 'visible' : 'hidden')};
   transition:
@@ -47,28 +50,28 @@ export const OptionsContainer = styled.div<{ open: boolean }>`
     visibility 0.2s ease-in-out;
 
   &::-webkit-scrollbar {
-    width: 5px;
+    width: ${({ theme }) => theme.valueInPx.px2};
   }
 
   &::-webkit-scrollbar-track {
-    background-color: #e8e8e8;
+    background-color: ${({ theme }) => theme.usedColors.white};
   }
 
   &::-webkit-scrollbar-thumb {
-    background-color: grey;
+    background-color: ${({ theme }) => theme.usedColors.lightGray};
   }
 
   &::-webkit-scrollbar-thumb:hover {
-    background-color: gray;
+    background-color: ${({ theme }) => theme.usedColors.gray};
   }
 `;
 
 export const Option = styled.div<{ selected?: boolean }>`
-  padding: 10px;
+  padding: ${({ theme }) => theme.valueInPx.px10};
   cursor: pointer;
-  background: ${({ selected }) => (selected ? '#eee' : 'none')};
+  background: ${({ selected }) => (selected ? usedColors.white : 'none')};
 
   &:hover {
-    background-color: #eee;
+    background-color: ${({ theme }) => theme.usedColors.lightGray};
   }
 `;

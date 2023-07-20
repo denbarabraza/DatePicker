@@ -6,10 +6,10 @@ export const Wrapper = styled.div`
   align-items: center;
   justify-content: center;
   position: absolute;
-  top: 125px;
-  background-color: #fff;
-  border: 1px solid #b3b3b3;
-  border-radius: 8px;
-  width: 320px;
-  height: 100px;
+  top: ${({ theme }) => theme.valueInPercent.px125};
+  background-color: ${({ theme }) => theme.usedColors.white};
+  border: 1px solid ${({ theme }) => theme.usedColors.lightGray};
+  border-radius: ${({ theme }) => theme.valueInPx.px10};
+  width: ${({ theme }) => theme.valueInPx.px320};
+  height: ${({ theme }) => theme.valueInPx.px100};
 `;

@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
   display: flex;
-  width: 100%;
+  width: ${({ theme }) => theme.valueInPercent.pr100};
   align-items: center;
   justify-content: center;
   flex-direction: row;
@@ -12,31 +12,31 @@ export const InputContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 33px;
-  width: 100%;
+  height: ${({ theme }) => theme.valueInPx.px30};
+  width: ${({ theme }) => theme.valueInPercent.pr100};
   position: relative;
 `;
 export const InputItem = styled.input`
-  width: 100%;
-  height: 100%;
+  width: ${({ theme }) => theme.valueInPercent.pr100};
+  height: ${({ theme }) => theme.valueInPercent.pr100};
   text-align: center;
-  font-size: 14px;
-  font-family: 'Dosis', sans-serif;
-  line-height: 16px;
-  border: 1px solid #939292;
-  border-radius: 5px;
+  font-size: ${({ theme }) => theme.fontSizes.l};
+  font-family: 'Dosis', 'sans-serif';
+  line-height: ${({ theme }) => theme.valueInPx.px10};
+  border: 1px solid ${({ theme }) => theme.usedColors.lightGray};
+  border-radius: ${({ theme }) => theme.valueInPx.px5};
 
   &:focus {
-    border: 1px solid #212121;
+    border: 1px solid ${({ theme }) => theme.usedColors.black};
   }
 `;
 
 export const DelIcon = styled.div`
-  width: 15px;
-  height: 15px;
+  width: ${({ theme }) => theme.valueInPx.px16};
+  height: ${({ theme }) => theme.valueInPx.px16};
   position: absolute;
-  top: 25%;
-  right: 5px;
+  top: ${({ theme }) => theme.valueInPercent.pr25};
+  right: ${({ theme }) => theme.valueInPx.px5};
   transition: all 0.3s ease-in-out;
   cursor: pointer;
 
@@ -46,9 +46,9 @@ export const DelIcon = styled.div`
 `;
 
 export const CalIcon = styled.div`
-  width: 15px;
-  height: 15px;
+  width: ${({ theme }) => theme.valueInPx.px16};
+  height: ${({ theme }) => theme.valueInPx.px16};
   position: absolute;
-  top: 25%;
-  left: 5px;
+  top: ${({ theme }) => theme.valueInPercent.pr25};
+  left: ${({ theme }) => theme.valueInPx.px10};
 `;

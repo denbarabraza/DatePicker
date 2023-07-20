@@ -6,5 +6,5 @@ export const Wrapper = styled.div`
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-  gap: 5px;
+  gap: ${({ theme }) => theme.valueInPx.px5};
 `;

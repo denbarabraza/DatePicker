@@ -1,26 +1,29 @@
 import styled, { css } from 'styled-components';
 
+import { usedColors } from '@/theme/theme';
+
 export const CalendarHeader = styled.div`
-  font-weight: 600;
+  font-weight: ${({ theme }) => theme.fontWeight.semibold};
   display: flex;
-  width: 100%;
+  width: ${({ theme }) => theme.valueInPercent.pr100};
   justify-content: space-around;
   align-items: center;
-  height: 50px;
+  height: ${({ theme }) => theme.valueInPx.px50};
 `;
 
 export const CalendarCell = styled.div<{ isStartOfWeek: boolean }>`
-  padding: 4px;
-  width: 20px;
+  padding: ${({ theme }) => theme.valueInPx.px5};
+  width: ${({ theme }) => theme.valueInPx.px20};
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  border-bottom: ${({ isStartOfWeek }) => (isStartOfWeek ? '1px solid #b3b3b3' : 'none')};
+  border-bottom: ${({ isStartOfWeek }) =>
+    isStartOfWeek ? `1px solid ${usedColors.lightGray}` : 'none'};
 `;
 
 export const CalendarRow = styled.div<{ withWeekends: boolean }>`
-  width: 100%;
+  width: ${({ theme }) => theme.valueInPercent.pr100};
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -37,26 +40,26 @@ export const DayCell = styled.div<{
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 25px;
-  padding: 1px;
-  border-radius: 50%;
+  height: ${({ theme }) => theme.valueInPx.px25};
+  padding: ${({ theme }) => theme.valueInPx.px1};
+  border-radius: ${({ theme }) => theme.valueInPercent.pr50};
   cursor: pointer;
   transition: background-color 0.2s ease-in-out;
-  width: 24px;
+  width: ${({ theme }) => theme.valueInPx.px25};
 
   &:hover {
-    background-color: #e9e9e9;
+    background-color: ${({ theme }) => theme.usedColors.gray};
   }
 
   &:active {
-    background-color: #d1d1d1;
+    background-color: ${({ theme }) => theme.usedColors.lightGray};
   }
 
   ${({ isActive }) =>
     isActive &&
     css`
-      background-color: #6d9fe8;
-      color: #fff;
+      background-color: ${({ theme }) => theme.usedColors.blueOpacity};
+      color: ${({ theme }) => theme.usedColors.white};
     `}
   ${({ isCurrentMonth }) =>
     !isCurrentMonth &&
@@ -66,51 +69,51 @@ export const DayCell = styled.div<{
   ${({ isWeekend }) =>
     isWeekend &&
     css`
-      color: #ef4e4e;
+      color: ${({ theme }) => theme.usedColors.redOpacity};
     `}
   ${({ isToday }) =>
     isToday &&
     css`
-      border: 1px dashed grey;
-      border-radius: 50%;
+      border: 1px dashed ${({ theme }) => theme.usedColors.lightGray};
+      border-radius: ${({ theme }) => theme.valueInPercent.pr50};
     `}
   ${({ isHoliday }) =>
     isHoliday &&
     css`
-      color: #39ea18;
+      color: ${({ theme }) => theme.usedColors.greenOpacity};
     `}
 `;
 
 export const TooltipBlock = styled.div`
-  width: 100%;
+  width: ${({ theme }) => theme.valueInPercent.pr100};
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
-  padding: 10px;
+  padding: ${({ theme }) => theme.valueInPx.px10};
 `;
 export const TooltipItem = styled.div`
-  font-size: 16px;
-  font-weight: 600;
+  font-size: ${({ theme }) => theme.fontSizes.l};
+  font-weight: ${({ theme }) => theme.fontWeight.semibold};
 `;
 
 export const CircleMarker = styled.div`
   display: flex;
   align-items: center;
   position: relative;
-  padding-left: 16px;
+  padding-left: ${({ theme }) => theme.valueInPx.px16};
 
   &::before {
     content: '';
     display: block;
     position: absolute;
-    top: 50%;
-    left: 0;
+    top: ${({ theme }) => theme.valueInPercent.pr50};
+    left: ${({ theme }) => theme.valueInPx.px0};
     transform: translateY(-50%);
-    width: 8px;
-    height: 8px;
-    background-color: #39ea18;
-    border-radius: 50%;
-    margin-right: 8px;
+    width: ${({ theme }) => theme.valueInPx.px10};
+    height: ${({ theme }) => theme.valueInPx.px10};
+    background-color: ${({ theme }) => theme.usedColors.greenOpacity};
+    border-radius: ${({ theme }) => theme.valueInPercent.pr50};
+    margin-right: ${({ theme }) => theme.valueInPx.px10};
   }
 `;
