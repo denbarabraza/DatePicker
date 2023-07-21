@@ -4,7 +4,7 @@ import { ITaskInCalendar } from '@/components/DatePicker/interface';
 import { Toggle } from '@/components/Toggle';
 import { WeekendStatusEnum } from '@/components/Toggle/types';
 
-import { Wrapper } from './styled';
+import { RemoveInfo, Wrapper } from './styled';
 
 export interface IDisplayFilter {
   statusWeekends: WeekendStatusEnum;
@@ -25,7 +25,7 @@ export const DisplayFilter: FC<IDisplayFilter> = ({
   return (
     <Wrapper>
       <Toggle statusWeekends={statusWeekends} setStatusWeekends={setStatusWeekends} />
-      <div onClick={onClickRemoveTaskHandler}>Remove all tasks</div>
+      <RemoveInfo onClick={onClickRemoveTaskHandler}>Remove all tasks</RemoveInfo>
     </Wrapper>
   );
 };

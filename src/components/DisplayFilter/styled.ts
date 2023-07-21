@@ -11,5 +11,15 @@ export const Wrapper = styled.div`
   border: 1px solid ${({ theme }) => theme.usedColors.lightGray};
   border-radius: ${({ theme }) => theme.valueInPx.px10};
   width: ${({ theme }) => theme.valueInPx.px320};
-  height: ${({ theme }) => theme.valueInPx.px100};
+  max-height: ${({ theme }) => theme.valueInPx.px200};
+  padding-bottom: ${({ theme }) => theme.valueInPx.px10};
+`;
+
+export const RemoveInfo = styled.div`
+  border-bottom: 1px solid ${({ theme }) => theme.usedColors.lightGray};
+  cursor: pointer;
+
+  &:hover {
+    transform: scale(1.1);
+  }
 `;
