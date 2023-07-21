@@ -2,6 +2,13 @@ import styled, { css } from 'styled-components';
 
 import { usedColors } from '@/theme/theme';
 
+export const CalendarBlock = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  width: ${({ theme }) => theme.valueInPercent.pr100};
+`;
+
 export const CalendarHeader = styled.div`
   font-weight: ${({ theme }) => theme.fontWeight.semibold};
   display: flex;
@@ -44,6 +51,7 @@ export const DayCell = styled.div<{
   padding: ${({ theme }) => theme.valueInPx.px1};
   border-radius: ${({ theme }) => theme.valueInPercent.pr50};
   cursor: pointer;
+  position: relative;
   transition: background-color 0.2s ease-in-out;
   width: ${({ theme }) => theme.valueInPx.px25};
 
@@ -113,6 +121,41 @@ export const CircleMarker = styled.div`
     width: ${({ theme }) => theme.valueInPx.px10};
     height: ${({ theme }) => theme.valueInPx.px10};
     background-color: ${({ theme }) => theme.usedColors.greenOpacity};
+    border-radius: ${({ theme }) => theme.valueInPercent.pr50};
+    margin-right: ${({ theme }) => theme.valueInPx.px10};
+  }
+`;
+
+export const TaskList = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: ${({ theme }) => theme.valueInPx.px5};
+  justify-content: flex-start;
+  align-items: center;
+  width: ${({ theme }) => theme.valueInPercent.pr100};
+  margin: ${({ theme }) => theme.valueInPx.px20} ${({ theme }) => theme.valueInPx.px0};
+`;
+
+export const Task = styled.div`
+  padding-left: ${({ theme }) => theme.valueInPx.px10};
+  margin: ${({ theme }) => theme.valueInPx.px0} ${({ theme }) => theme.valueInPx.px10};
+  width: ${({ theme }) => theme.valueInPercent.pr100};
+  background-color: ${({ theme }) => theme.usedColors.lightGrayOpacity};
+  border-radius: ${({ theme }) => theme.valueInPx.px8};
+  font-size: ${({ theme }) => theme.fontSizes.l}
+  line-height: 1.4;
+  color: ${({ theme }) => theme.usedColors.black};
+`;
+
+export const CircleTaskMarker = styled.div`
+  &::before {
+    content: '';
+    position: absolute;
+    top: ${({ theme }) => theme.valueInPercent.pr25};
+    left: ${({ theme }) => theme.valueInPx.px22};
+    width: ${({ theme }) => theme.valueInPx.px8};
+    height: ${({ theme }) => theme.valueInPx.px8};
+    background-color: ${({ theme }) => theme.usedColors.blueOpacity};
     border-radius: ${({ theme }) => theme.valueInPercent.pr50};
     margin-right: ${({ theme }) => theme.valueInPx.px10};
   }

@@ -2,7 +2,12 @@ import React, { useEffect, useState } from 'react';
 
 import { FilterIcon } from '@/assets/FilterIcon';
 import { CustomInput } from '@/components/CustomInput';
-import { IDatePicker, IHolidaysResponse } from '@/components/DatePicker/interface';
+import { InputEnum } from '@/components/CustomInput/interface';
+import {
+  IDatePicker,
+  IHolidaysResponse,
+  ITaskInCalendar,
+} from '@/components/DatePicker/interface';
 import { DatePickerCalendar } from '@/components/DatePickerCalendar';
 import { DatePickerSelector } from '@/components/DatePickerSelector';
 import { DisplayFilter } from '@/components/DisplayFilter/DisplayFilter';
@@ -23,6 +28,7 @@ export const DatePicker: React.FC<IDatePicker> = ({ selectedDate, onChangeDate }
   );
   const [startOfWeek, setStartOfWeek] = useState<number>(1);
   const [holidays, setHolidays] = useState<IHolidaysResponse | undefined | null>();
+  const [tasksDate, setTasksDate] = useState<ITaskInCalendar>({});
 
   const year = selectedDate.format('YYYY');
 
@@ -52,12 +58,13 @@ export const DatePicker: React.FC<IDatePicker> = ({ selectedDate, onChangeDate }
   }, [year]);
 
   return (
-    <ErrorBoundary fallback={<ErrorFallback />}>
-      <Theme>
+    <Theme>
+      <ErrorBoundary fallback={<ErrorFallback />}>
         <DatePickerBlock>
           <GlobalStyle />
           <InputFilterBlock>
             <CustomInput
+              type={InputEnum.Date}
               date={selectedDate}
               onChooseDate={onChangeDate}
               placeholder='Choose Date (yyyy-mm-dd)'
@@ -87,15 +94,18 @@ export const DatePicker: React.FC<IDatePicker> = ({ selectedDate, onChangeDate }
             setStartOfWeek={setNumberStartOfWeek}
             holidays={holidays}
             statusWeekends={statusWeekends}
+            setTasksDate={setTasksDate}
+            tasksDate={tasksDate}
           />
           {showFilter && (
             <DisplayFilter
               statusWeekends={statusWeekends}
               setStatusWeekends={setStatusWeekends}
+              setTasksDate={setTasksDate}
             />
           )}
         </DatePickerBlock>
-      </Theme>
-    </ErrorBoundary>
+      </ErrorBoundary>
+    </Theme>
   );
 };

@@ -1,7 +1,6 @@
-import React from 'react';
 import { Dayjs } from 'dayjs';
 
-import { IHolidaysResponse } from '@/components/DatePicker/interface';
+import { IHolidaysResponse, ITaskInCalendar } from '@/components/DatePicker/interface';
 import { WeekendStatusEnum } from '@/components/Toggle/types';
 
 export interface IDatePickerCalendarProps {
@@ -12,4 +11,6 @@ export interface IDatePickerCalendarProps {
   setStartOfWeek: (startOfWeek: string) => void;
   holidays: IHolidaysResponse | undefined | null;
   statusWeekends: WeekendStatusEnum;
+  setTasksDate: (value: ITaskInCalendar) => void;
+  tasksDate: ITaskInCalendar;
 }

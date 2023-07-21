@@ -4,6 +4,7 @@ export interface IUsedColors {
   blackOpacity: string;
   blueOpacity: string;
   redOpacity: string;
+  lightGrayOpacity: string;
   greenOpacity: string;
   lightGray: string;
   gray: string;
@@ -30,9 +31,11 @@ export interface ITheme {
     px1: string;
     px2: string;
     px5: string;
+    px8: string;
     px10: string;
     px16: string;
     px20: string;
+    px22: string;
     px25: string;
     px30: string;
     px40: string;

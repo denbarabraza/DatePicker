@@ -1,4 +1,3 @@
-import React from 'react';
 import { Dayjs } from 'dayjs';
 
 export interface IDatePicker {
@@ -22,4 +21,8 @@ export interface IHolidays {
   states: string;
   type: string[];
   urlid: string;
+}
+
+export interface ITaskInCalendar {
+  [key: string]: string[];
 }

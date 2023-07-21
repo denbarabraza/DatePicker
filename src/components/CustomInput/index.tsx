@@ -4,20 +4,40 @@ import dayjs from 'dayjs';
 import { CalendarIcon } from '@/assets/CalendarIcon';
 import { DeleteIcon } from '@/assets/DeleteIcon';
 
-import { ICustomInput } from './interface';
+import { ICustomInput, InputEnum } from './interface';
 import { CalIcon, Container, DelIcon, InputContainer, InputItem } from './styled';
 
 export const CustomInput: FC<ICustomInput> = memo(
-  ({ onChooseDate, date, placeholder }) => {
+  ({
+    type,
+    onChooseDate,
+    date,
+    taskValue,
+    setTaskValue,
+    placeholder,
+    setTaskInCalendar,
+  }) => {
     const [chooseDate, setChooseDate] = useState<string>('');
+    const ruleDateInput = type === InputEnum.Date;
 
-    const onChange = (event: ChangeEvent<HTMLInputElement>) => {
-      setChooseDate(event.target.value);
+    const onChangeInput = (event: ChangeEvent<HTMLInputElement>) => {
+      if (ruleDateInput) {
+        setChooseDate(event.target.value);
+      }
+      if (!ruleDateInput && setTaskValue) {
+        setTaskValue(event.currentTarget.value);
+      }
     };
 
     const onKeyUp = (event: KeyboardEvent<HTMLInputElement>) => {
       if (event.key === 'Enter') {
-        onChooseDate(dayjs(chooseDate.trim()));
+        if (ruleDateInput && onChooseDate) {
+          onChooseDate(dayjs(chooseDate.trim()));
+        }
+        if (!ruleDateInput && setTaskValue && setTaskInCalendar) {
+          setTaskInCalendar();
+          setTaskValue('');
+        }
       }
     };
 
@@ -26,25 +46,39 @@ export const CustomInput: FC<ICustomInput> = memo(
     };
 
     useEffect(() => {
-      setChooseDate(date.format('YYYY-MM-DD'));
+      if (date) {
+        setChooseDate(date.format('YYYY-MM-DD'));
+      }
     }, [date]);
 
     return (
-      <Container>
+      <Container ruleDateInput={ruleDateInput}>
         <InputContainer>
-          <CalIcon>
-            <CalendarIcon />
-          </CalIcon>
-          <InputItem
-            type='text'
-            placeholder={placeholder}
-            value={chooseDate}
-            onChange={onChange}
-            onKeyUp={onKeyUp}
-          />
-          <DelIcon onClick={onClickDel}>
-            <DeleteIcon />
-          </DelIcon>
+          {ruleDateInput ? (
+            <>
+              <CalIcon>
+                <CalendarIcon />
+              </CalIcon>
+              <InputItem
+                type='text'
+                placeholder={placeholder}
+                value={chooseDate}
+                onChange={onChangeInput}
+                onKeyUp={onKeyUp}
+              />
+              <DelIcon onClick={onClickDel}>
+                <DeleteIcon />
+              </DelIcon>
+            </>
+          ) : (
+            <InputItem
+              type='text'
+              placeholder={placeholder}
+              value={taskValue}
+              onChange={onChangeInput}
+              onKeyUp={onKeyUp}
+            />
+          )}
         </InputContainer>
       </Container>
     );

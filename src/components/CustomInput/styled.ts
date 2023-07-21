@@ -1,12 +1,13 @@
 import styled from 'styled-components';
 
-export const Container = styled.div`
+export const Container = styled.div<{ ruleDateInput: boolean }>`
   display: flex;
   width: ${({ theme }) => theme.valueInPercent.pr100};
   align-items: center;
   justify-content: center;
   flex-direction: row;
   position: relative;
+  margin-top: ${({ ruleDateInput }) => (!ruleDateInput ? '20px' : 'none')};
 `;
 export const InputContainer = styled.div`
   display: flex;
@@ -18,7 +19,7 @@ export const InputContainer = styled.div`
 `;
 export const InputItem = styled.input`
   width: ${({ theme }) => theme.valueInPercent.pr100};
-  height: ${({ theme }) => theme.valueInPercent.pr100};
+  height: ${({ theme }) => theme.valueInPx.px30};
   text-align: center;
   font-size: ${({ theme }) => theme.fontSizes.l};
   font-family: 'Dosis', 'sans-serif';
