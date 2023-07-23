@@ -13,7 +13,15 @@
   "scripts": {
     "rollup": "rollup -c",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "lint-fix": "eslint --fix --ext .js,.jsx,.ts,.tsx src",
+    "prepare": "husky install"
+  },
+  "lint-staged": {
+    "*.{js,ts,jsx,tsx}": [
+      "yarn run lint-fix",
+      "prettier --write"
+    ]
   },
   "dependencies": {
     "tslib": "^2.6.0"
@@ -53,6 +61,8 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-simple-import-sort": "^10.0.0",
     "eslint-plugin-storybook": "^0.6.12",
+    "lint-staged": "^13.2.3",
+    "mrm": "2",
     "prettier": "3.0.0",
     "prop-types": "15.8.1",
     "react": "^18.2.0",
