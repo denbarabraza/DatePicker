@@ -7,7 +7,7 @@ export enum InputEnum {
 
 export interface ICustomInput {
   type: InputEnum;
-  date?: Dayjs;
+  date?: false | Dayjs;
   onChooseDate?: (date: Dayjs) => void;
   placeholder?: string;
   taskValue?: string;

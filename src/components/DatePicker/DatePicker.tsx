@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import dayjs, { Dayjs } from 'dayjs';
 
 import { FilterIcon } from '@/assets/FilterIcon';
 import { CustomInput } from '@/components/CustomInput';
@@ -6,8 +7,9 @@ import { InputEnum } from '@/components/CustomInput/interface';
 import {
   IDatePicker,
   IHolidaysResponse,
+  IObj,
   ITaskInCalendar,
-} from '@/components/DatePicker/interface';
+} from '@/components/DatePicker/interfaces';
 import { DatePickerCalendar } from '@/components/DatePickerCalendar';
 import { DatePickerSelector } from '@/components/DatePickerSelector';
 import { DisplayFilter } from '@/components/DisplayFilter/DisplayFilter';
@@ -16,6 +18,7 @@ import { ErrorBoundary } from '@/components/ErrorBoundary';
 import { ErrorFallback } from '@/components/ErrorBoundary/ErrorFallback';
 import { Theme } from '@/components/Theme';
 import { WeekendStatusEnum } from '@/components/Toggle/types';
+import { FormatEnum } from '@/constants/formatDate';
 import { getDayOfWeek } from '@/utils/utils';
 
 import { DatePickerBlock, FilterItemIcon, GlobalStyle, InputFilterBlock } from './styled';
@@ -29,8 +32,12 @@ export const DatePicker: React.FC<IDatePicker> = ({ selectedDate, onChangeDate }
   const [startOfWeek, setStartOfWeek] = useState<number>(1);
   const [holidays, setHolidays] = useState<IHolidaysResponse | undefined | null>();
   const [tasksDate, setTasksDate] = useState<ITaskInCalendar>({});
+  const [rangeDays, setRangeDays] = useState<IObj>({
+    from: '',
+    to: '',
+  });
 
-  const year = selectedDate.format('YYYY');
+  const year = selectedDate.format(FormatEnum.Year);
 
   const onClickShowMonthYear = () => {
     setShowMonthYear(prev => !prev);
@@ -42,6 +49,20 @@ export const DatePicker: React.FC<IDatePicker> = ({ selectedDate, onChangeDate }
 
   const setNumberStartOfWeek = (dayValue: string) => {
     setStartOfWeek(getDayOfWeek(dayValue));
+  };
+
+  const setFromDate = (date: Dayjs) => {
+    setRangeDays({
+      ...rangeDays,
+      from: date.format(FormatEnum.YearMonthDayFormat),
+    });
+  };
+
+  const setToDate = (date: Dayjs) => {
+    setRangeDays({
+      ...rangeDays,
+      to: date.format(FormatEnum.YearMonthDayFormat),
+    });
   };
 
   useEffect(() => {
@@ -73,6 +94,18 @@ export const DatePicker: React.FC<IDatePicker> = ({ selectedDate, onChangeDate }
               <FilterIcon />
             </FilterItemIcon>
           </InputFilterBlock>
+          <CustomInput
+            type={InputEnum.Date}
+            date={rangeDays.from.length > 0 && dayjs(rangeDays.from)}
+            onChooseDate={setFromDate}
+            placeholder='Choose a date from'
+          />
+          <CustomInput
+            type={InputEnum.Date}
+            date={rangeDays.to.length > 0 && dayjs(rangeDays.to)}
+            onChooseDate={setToDate}
+            placeholder='Choose a date to'
+          />
 
           <DatePickerSelector
             shownDate={selectedDate}
@@ -96,6 +129,8 @@ export const DatePicker: React.FC<IDatePicker> = ({ selectedDate, onChangeDate }
             statusWeekends={statusWeekends}
             setTasksDate={setTasksDate}
             tasksDate={tasksDate}
+            rangeDays={rangeDays}
+            setRangeDays={setRangeDays}
           />
           {showFilter && (
             <DisplayFilter

@@ -7,7 +7,7 @@ export const Container = styled.div<{ ruleDateInput: boolean }>`
   justify-content: center;
   flex-direction: row;
   position: relative;
-  margin-top: ${({ ruleDateInput }) => (!ruleDateInput ? '20px' : 'none')};
+  margin-top: ${({ ruleDateInput }) => (!ruleDateInput ? '10px' : 'none')};
 `;
 export const InputContainer = styled.div`
   display: flex;

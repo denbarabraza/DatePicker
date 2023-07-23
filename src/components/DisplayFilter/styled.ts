@@ -10,7 +10,7 @@ export const Wrapper = styled.div`
   background-color: ${({ theme }) => theme.usedColors.white};
   border: 1px solid ${({ theme }) => theme.usedColors.lightGray};
   border-radius: ${({ theme }) => theme.valueInPx.px10};
-  width: ${({ theme }) => theme.valueInPx.px320};
+  width: ${({ theme }) => theme.valueInPx.px250};
   max-height: ${({ theme }) => theme.valueInPx.px200};
   padding-bottom: ${({ theme }) => theme.valueInPx.px10};
 `;

@@ -7,7 +7,9 @@ export const usedColors: IUsedColors = {
   gray: 'rgb(75,75,75)',
   lightGray: 'rgb(178,178,178)',
   lightGrayOpacity: 'rgb(238,238,238)',
+  blue: 'rgb(2,83,208)',
   blueOpacity: 'rgb(109,159,232)',
+  blueMoreOpacity: 'rgb(193,217,255)',
   redOpacity: 'rgb(231,79,79)',
   greenOpacity: 'rgb(57,234,24)',
 };
@@ -40,6 +42,7 @@ export const baseTheme: ITheme = {
     px22: '22px',
     px25: '25px',
     px30: '30px',
+    px34: '34px',
     px40: '40px',
     px45: '45px',
     px50: '50px',

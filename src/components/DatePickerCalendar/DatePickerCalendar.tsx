@@ -1,10 +1,11 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { Dayjs } from 'dayjs';
+import dayjs, { Dayjs } from 'dayjs';
 
 import { CustomInput } from '@/components/CustomInput';
 import { InputEnum } from '@/components/CustomInput/interface';
 import { IDatePickerCalendarProps } from '@/components/DatePickerCalendar/interface';
 import { WeekendStatusEnum } from '@/components/Toggle/types';
+import { FormatEnum } from '@/constants/formatDate';
 import { getCalendarRows, getDayOfWeek } from '@/utils/utils';
 
 import {
@@ -31,13 +32,15 @@ export const DatePickerCalendar: React.FC<IDatePickerCalendarProps> = ({
   statusWeekends,
   setTasksDate,
   tasksDate,
+  rangeDays,
+  setRangeDays,
 }) => {
   const [holiday, setHoliday] = useState<null | string>(null);
   const [showTooltip, setShowTooltip] = useState(false);
   const [showTaskControl, setShowTaskControl] = useState(false);
   const [taskValue, setTaskValue] = useState('');
 
-  const dateKey = selectedDate.format('YYYY-MM-DD');
+  const dateKey = selectedDate.format(FormatEnum.YearMonthDayFormat);
 
   const handleMouseEnter = (tooltip: string | undefined) => () => {
     if (tooltip) {
@@ -51,10 +54,59 @@ export const DatePickerCalendar: React.FC<IDatePickerCalendarProps> = ({
     setShowTooltip(false);
   };
 
+  const isInRange = (date: Dayjs, startDate: string, endDate: string) => {
+    return date.isAfter(startDate, 'day') && date.isBefore(endDate, 'day');
+  };
   const handleSelectDate = (value: Dayjs) => () => {
-    setShowTaskControl(true);
+    if (onChangeDate) {
+      setShowTaskControl(true);
+      onChangeDate(value);
+    }
 
-    onChangeDate(value);
+    if (setRangeDays) {
+      const getDayFormat = (day: Dayjs) => {
+        return dayjs(day).format(FormatEnum.YearMonthDayFormat);
+      };
+
+      const dateFormat = getDayFormat(value);
+
+      if (!rangeDays?.from && !rangeDays?.to.length) {
+        setRangeDays({ from: dateFormat, to: '' });
+      }
+      if (!rangeDays?.to && rangeDays?.from) {
+        handleChangeState(rangeDays?.from, dateFormat);
+      } else if (!rangeDays?.to.length && rangeDays?.from) {
+        handleChangeState(rangeDays?.from, dateFormat);
+      } else if (rangeDays?.from && rangeDays?.to) {
+        setRangeDays({ from: dateFormat, to: '' });
+      }
+    }
+  };
+
+  const handleChangeState = (from: string, to: string) => {
+    if (setRangeDays) {
+      if (dayjs(from).isBefore(to)) {
+        setRangeDays({
+          from,
+          to,
+        });
+      } else {
+        setRangeDays({
+          from: to,
+          to: from,
+        });
+      }
+    }
+  };
+
+  const getEndDateForClasses = () => {
+    if (rangeDays) {
+      if (rangeDays.to) return rangeDays.to;
+
+      return rangeDays.from;
+    }
+
+    return '';
   };
 
   const changeStartWeekDay = (value: string) => () => {
@@ -95,10 +147,10 @@ export const DatePickerCalendar: React.FC<IDatePickerCalendarProps> = ({
         {rows[0].map(({ value }, i) => (
           <CalendarCell
             key={i}
-            isStartOfWeek={startOfWeek === getDayOfWeek(value.format('dd'))}
-            onClick={changeStartWeekDay(value.format('dd'))}
+            isStartOfWeek={startOfWeek === getDayOfWeek(value.format(FormatEnum.Day))}
+            onClick={changeStartWeekDay(value.format(FormatEnum.Day))}
           >
-            {value.format('dd')}
+            {value.format(FormatEnum.Day)}
           </CalendarCell>
         ))}
       </CalendarHeader>
@@ -118,8 +170,23 @@ export const DatePickerCalendar: React.FC<IDatePickerCalendarProps> = ({
               isHoliday,
               holidayName,
             }) => {
-              const dateKey = value.format('YYYY-MM-DD');
+              const dateKey = value.format(FormatEnum.YearMonthDayFormat);
               const tasksForDate = tasksDate[dateKey] || [];
+              const isStartDate =
+                rangeDays &&
+                dateKey ===
+                  (dayjs(rangeDays.from).isBefore(getEndDateForClasses())
+                    ? rangeDays.from
+                    : rangeDays.to);
+              const isEndDate =
+                rangeDays &&
+                dateKey ===
+                  (dayjs(rangeDays.from).isBefore(getEndDateForClasses())
+                    ? rangeDays.to
+                    : rangeDays.from);
+              const isDateInRange = rangeDays
+                ? isInRange(value, rangeDays?.from, getEndDateForClasses())
+                : false;
 
               return (
                 <DayCell
@@ -132,6 +199,9 @@ export const DatePickerCalendar: React.FC<IDatePickerCalendarProps> = ({
                   onClick={handleSelectDate(value)}
                   onMouseEnter={handleMouseEnter(holidayName)}
                   onMouseLeave={handleMouseLeave}
+                  isStartDate={isStartDate}
+                  isEndDate={isEndDate}
+                  isInRange={isDateInRange}
                 >
                   {text}
                   {tasksForDate.length > 0 && <CircleTaskMarker />}
@@ -160,7 +230,7 @@ export const DatePickerCalendar: React.FC<IDatePickerCalendarProps> = ({
           taskValue={taskValue}
           setTaskValue={setTaskValue}
           setTaskInCalendar={setTaskInCalendar}
-          placeholder='Create a task for the selected date'
+          placeholder='Task for the selected date'
         />
       )}
     </CalendarBlock>

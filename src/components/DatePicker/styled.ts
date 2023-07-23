@@ -40,7 +40,7 @@ export const DatePickerBlock = styled.div`
   padding: ${({ theme }) => theme.valueInPx.px10};
   border-radius: ${({ theme }) => theme.valueInPx.px5};
 
-  max-width: ${({ theme }) => theme.valueInPx.px320};
+  width: ${({ theme }) => theme.valueInPx.px250};
 `;
 
 export const InputFilterBlock = styled.div`

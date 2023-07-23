@@ -3,7 +3,7 @@ import { Meta, StoryFn } from '@storybook/react';
 import dayjs, { Dayjs } from 'dayjs';
 
 import { DatePicker } from '@/components/DatePicker';
-import { IDatePicker } from '@/components/DatePicker/interface';
+import { IDatePicker } from '@/components/DatePicker/interfaces';
 
 export default {
   title: 'ReactComponentLibrary/DatePicker',

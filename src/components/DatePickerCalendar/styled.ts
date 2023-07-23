@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 
 import { usedColors } from '@/theme/theme';
 
@@ -43,17 +43,19 @@ export const DayCell = styled.div<{
   isWeekend: boolean;
   isToday: boolean;
   isHoliday: boolean;
+  isInRange: boolean;
+  isStartDate: boolean | undefined;
+  isEndDate: boolean | undefined;
 }>`
   display: flex;
   align-items: center;
   justify-content: center;
   height: ${({ theme }) => theme.valueInPx.px25};
   padding: ${({ theme }) => theme.valueInPx.px1};
-  border-radius: ${({ theme }) => theme.valueInPercent.pr50};
   cursor: pointer;
   position: relative;
   transition: background-color 0.2s ease-in-out;
-  width: ${({ theme }) => theme.valueInPx.px25};
+  width: ${({ theme }) => theme.valueInPx.px34};
 
   &:hover {
     background-color: ${({ theme }) => theme.usedColors.gray};
@@ -63,33 +65,81 @@ export const DayCell = styled.div<{
     background-color: ${({ theme }) => theme.usedColors.lightGray};
   }
 
-  ${({ isActive }) =>
-    isActive &&
-    css`
-      background-color: ${({ theme }) => theme.usedColors.blueOpacity};
-      color: ${({ theme }) => theme.usedColors.white};
-    `}
-  ${({ isCurrentMonth }) =>
-    !isCurrentMonth &&
-    css`
-      opacity: 0.3;
-    `}
-  ${({ isWeekend }) =>
-    isWeekend &&
-    css`
-      color: ${({ theme }) => theme.usedColors.redOpacity};
-    `}
-  ${({ isToday }) =>
-    isToday &&
-    css`
-      border: 1px dashed ${({ theme }) => theme.usedColors.lightGray};
-      border-radius: ${({ theme }) => theme.valueInPercent.pr50};
-    `}
-  ${({ isHoliday }) =>
-    isHoliday &&
-    css`
-      color: ${({ theme }) => theme.usedColors.greenOpacity};
-    `}
+  background-color: ${({ isInRange, isStartDate, isActive, isEndDate }) => {
+    if (isInRange) {
+      return usedColors.blueMoreOpacity;
+    }
+    if (isStartDate || isActive) {
+      return usedColors.blueOpacity;
+    }
+    if (isEndDate) {
+      return usedColors.blue;
+    }
+
+    return 'none';
+  }};
+
+  color: ${({ isEndDate, isStartDate, isActive, isWeekend, isHoliday }) => {
+    if (isEndDate || isStartDate || isActive) {
+      return usedColors.white;
+    }
+    if (isWeekend) {
+      return usedColors.redOpacity;
+    }
+    if (isHoliday) {
+      return usedColors.greenOpacity;
+    }
+
+    return '';
+  }};
+
+  opacity: ${({ isCurrentMonth }) => {
+    if (!isCurrentMonth) {
+      return 0.3;
+    }
+
+    return 'none';
+  }};
+
+  border-radius: ${({ isInRange, isStartDate, isEndDate, theme }) => {
+    if (isInRange || isStartDate || isEndDate) {
+      return 0;
+    }
+
+    return theme.valueInPercent.pr50;
+  }};
+
+  border-bottom-left-radius: ${({ isStartDate, theme }) => {
+    if (isStartDate) {
+      return theme.valueInPercent.pr50;
+    }
+  }};
+
+  border-bottom-right-radius: ${({ isEndDate, theme }) => {
+    if (isEndDate) {
+      return theme.valueInPercent.pr50;
+    }
+  }};
+
+  border-top-left-radius: ${({ isStartDate, theme }) => {
+    if (isStartDate) {
+      return theme.valueInPercent.pr50;
+    }
+  }};
+
+  border-top-right-radius: ${({ isEndDate, theme }) => {
+    if (isEndDate) {
+      return theme.valueInPercent.pr50;
+    }
+  }};
+
+  outline: ${({ isToday }) => {
+    if (isToday) {
+      return `1px dashed ${usedColors.lightGray}`;
+    }
+
+    return 'none';
+  }};
 `;
 
 export const TooltipBlock = styled.div`
@@ -133,16 +183,15 @@ export const TaskList = styled.div`
   justify-content: flex-start;
   align-items: center;
   width: ${({ theme }) => theme.valueInPercent.pr100};
-  margin: ${({ theme }) => theme.valueInPx.px20} ${({ theme }) => theme.valueInPx.px0};
+  margin: ${({ theme }) => theme.valueInPx.px10} ${({ theme }) => theme.valueInPx.px0};
 `;
 
 export const Task = styled.div`
   padding-left: ${({ theme }) => theme.valueInPx.px10};
-  margin: ${({ theme }) => theme.valueInPx.px0} ${({ theme }) => theme.valueInPx.px10};
   width: ${({ theme }) => theme.valueInPercent.pr100};
   background-color: ${({ theme }) => theme.usedColors.lightGrayOpacity};
   border-radius: ${({ theme }) => theme.valueInPx.px8};
-  font-size: ${({ theme }) => theme.fontSizes.l}
+  font-size: ${({ theme }) => theme.fontSizes.l};
   line-height: 1.4;
   color: ${({ theme }) => theme.usedColors.black};
 `;
@@ -151,11 +200,11 @@ export const CircleTaskMarker = styled.div`
   &::before {
     content: '';
     position: absolute;
-    top: ${({ theme }) => theme.valueInPercent.pr25};
-    left: ${({ theme }) => theme.valueInPx.px22};
+    top: ${({ theme }) => theme.valueInPercent.pr10};
+    left: ${({ theme }) => theme.valueInPx.px25};
     width: ${({ theme }) => theme.valueInPx.px8};
     height: ${({ theme }) => theme.valueInPx.px8};
-    background-color: ${({ theme }) => theme.usedColors.blueOpacity};
+    background-color: ${({ theme }) => theme.usedColors.greenOpacity};
     border-radius: ${({ theme }) => theme.valueInPercent.pr50};
     margin-right: ${({ theme }) => theme.valueInPx.px10};
   }

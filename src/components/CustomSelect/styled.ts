@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { usedColors } from '@/theme/theme';
 
 export const Container = styled.div`
-  width: ${({ theme }) => theme.valueInPx.px150};
+  width: ${({ theme }) => theme.valueInPx.px100};
   position: relative;
 `;
 
