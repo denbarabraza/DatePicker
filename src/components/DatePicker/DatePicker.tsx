@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { memo, useCallback, useEffect, useState } from 'react';
 import dayjs, { Dayjs } from 'dayjs';
 
 import { FilterIcon } from '@/assets/FilterIcon';
@@ -25,124 +25,135 @@ import { DatePickerBlock, FilterItemIcon, GlobalStyle, InputFilterBlock } from '
 
 const CALENDARAPI_KEY = process.env.CALENDAR_API_KEY;
 
-export const DatePicker: React.FC<IDatePicker> = ({ selectedDate, onChangeDate }) => {
-  const [showMonthYear, setShowMonthYear] = useState(false);
-  const [showFilter, setShowFilter] = useState(false);
-  const [statusWeekends, setStatusWeekends] = useState<WeekendStatusEnum>(
-    WeekendStatusEnum.WithWeekEnds,
-  );
-  const [startOfWeek, setStartOfWeek] = useState<number>(1);
-  const [holidays, setHolidays] = useState<IHolidaysResponse | undefined | null>();
-  const [tasksDate, setTasksDate] = useState<ITaskInCalendar>({});
-  const [rangeDays, setRangeDays] = useState<IObj>({
-    from: '',
-    to: '',
-  });
-
-  const year = selectedDate.format(FormatEnum.Year);
-
-  const onClickShowMonthYear = () => {
-    setShowMonthYear(prev => !prev);
-  };
-
-  const onClickShowFilter = () => {
-    setShowFilter(prev => !prev);
-  };
-
-  const setNumberStartOfWeek = (dayValue: string) => {
-    setStartOfWeek(getDayOfWeek(dayValue));
-  };
-
-  const setFromDate = (date: Dayjs) => {
-    setRangeDays({
-      ...rangeDays,
-      from: date.format(FormatEnum.YearMonthDayFormat),
+export const DatePicker: React.FC<IDatePicker> = memo(
+  ({ selectedDate, onChangeDate }) => {
+    const [showMonthYear, setShowMonthYear] = useState(false);
+    const [showFilter, setShowFilter] = useState(false);
+    const [statusWeekends, setStatusWeekends] = useState<WeekendStatusEnum>(
+      WeekendStatusEnum.WithWeekEnds,
+    );
+    const [startOfWeek, setStartOfWeek] = useState<number>(1);
+    const [holidays, setHolidays] = useState<IHolidaysResponse | undefined | null>();
+    const [tasksDate, setTasksDate] = useState<ITaskInCalendar>({});
+    const [rangeDays, setRangeDays] = useState<IObj>({
+      from: '',
+      to: '',
     });
-  };
 
-  const setToDate = (date: Dayjs) => {
-    setRangeDays({
-      ...rangeDays,
-      to: date.format(FormatEnum.YearMonthDayFormat),
-    });
-  };
+    const year = selectedDate.format(FormatEnum.Year);
 
-  useEffect(() => {
-    async function fetchHolidays() {
-      const response = await fetch(
-        `https://calendarific.com/api/v2/holidays?&api_key=${CALENDARAPI_KEY}&country=BY&year=${year}`,
-      );
-      const data = await response.json();
+    const onClickShowMonthYear = useCallback(() => {
+      setShowMonthYear(prev => !prev);
+    }, [setShowMonthYear]);
 
-      setHolidays(data);
-    }
+    const onClickShowFilter = useCallback(() => {
+      setShowFilter(prev => !prev);
+    }, [setShowFilter]);
 
-    fetchHolidays();
-  }, [year]);
+    const setNumberStartOfWeek = useCallback(
+      (dayValue: string) => {
+        setStartOfWeek(getDayOfWeek(dayValue));
+      },
+      [setStartOfWeek],
+    );
 
-  return (
-    <Theme>
-      <ErrorBoundary fallback={<ErrorFallback />}>
-        <DatePickerBlock>
-          <GlobalStyle />
-          <InputFilterBlock>
+    const setFromDate = useCallback(
+      (date: Dayjs) => {
+        setRangeDays({
+          ...rangeDays,
+          from: date.format(FormatEnum.YearMonthDayFormat),
+        });
+      },
+      [rangeDays, setRangeDays],
+    );
+
+    const setToDate = useCallback(
+      (date: Dayjs) => {
+        setRangeDays({
+          ...rangeDays,
+          to: date.format(FormatEnum.YearMonthDayFormat),
+        });
+      },
+      [rangeDays, setRangeDays],
+    );
+
+    useEffect(() => {
+      async function fetchHolidays() {
+        const response = await fetch(
+          `https://calendarific.com/api/v2/holidays?&api_key=${CALENDARAPI_KEY}&country=BY&year=${year}`,
+        );
+        const data = await response.json();
+
+        setHolidays(data);
+      }
+
+      fetchHolidays();
+    }, [year]);
+
+    return (
+      <Theme>
+        <ErrorBoundary fallback={<ErrorFallback />}>
+          <DatePickerBlock>
+            <GlobalStyle />
+            <InputFilterBlock>
+              <CustomInput
+                type={InputEnum.Date}
+                date={selectedDate}
+                onChooseDate={onChangeDate}
+                placeholder='Choose Date (yyyy-mm-dd)'
+              />
+              <FilterItemIcon onClick={onClickShowFilter}>
+                <FilterIcon />
+              </FilterItemIcon>
+            </InputFilterBlock>
             <CustomInput
               type={InputEnum.Date}
-              date={selectedDate}
-              onChooseDate={onChangeDate}
-              placeholder='Choose Date (yyyy-mm-dd)'
+              date={rangeDays.from.length > 0 && dayjs(rangeDays.from)}
+              onChooseDate={setFromDate}
+              placeholder='Choose a date from'
             />
-            <FilterItemIcon onClick={onClickShowFilter}>
-              <FilterIcon />
-            </FilterItemIcon>
-          </InputFilterBlock>
-          <CustomInput
-            type={InputEnum.Date}
-            date={rangeDays.from.length > 0 && dayjs(rangeDays.from)}
-            onChooseDate={setFromDate}
-            placeholder='Choose a date from'
-          />
-          <CustomInput
-            type={InputEnum.Date}
-            date={rangeDays.to.length > 0 && dayjs(rangeDays.to)}
-            onChooseDate={setToDate}
-            placeholder='Choose a date to'
-          />
+            <CustomInput
+              type={InputEnum.Date}
+              date={rangeDays.to.length > 0 && dayjs(rangeDays.to)}
+              onChooseDate={setToDate}
+              placeholder='Choose a date to'
+            />
 
-          <DatePickerSelector
-            shownDate={selectedDate}
-            onChangeDate={onChangeDate}
-            setShowMonthYear={onClickShowMonthYear}
-          />
-          {showMonthYear && (
-            <DisplayYearMonths
+            <DatePickerSelector
               shownDate={selectedDate}
               onChangeDate={onChangeDate}
-              setShowMonthYear={setShowMonthYear}
+              setShowMonthYear={onClickShowMonthYear}
             />
-          )}
-          <DatePickerCalendar
-            selectedDate={selectedDate}
-            shownDate={selectedDate}
-            onChangeDate={onChangeDate}
-            startOfWeek={startOfWeek}
-            setStartOfWeek={setNumberStartOfWeek}
-            holidays={holidays}
-            statusWeekends={statusWeekends}
-            setTasksDate={setTasksDate}
-            tasksDate={tasksDate}
-            rangeDays={rangeDays}
-            setRangeDays={setRangeDays}
-          />
-          {showFilter && (
-            <DisplayFilter
+            {showMonthYear && (
+              <DisplayYearMonths
+                shownDate={selectedDate}
+                onChangeDate={onChangeDate}
+                setShowMonthYear={setShowMonthYear}
+              />
+            )}
+            <DatePickerCalendar
+              selectedDate={selectedDate}
+              shownDate={selectedDate}
+              onChangeDate={onChangeDate}
+              startOfWeek={startOfWeek}
+              setStartOfWeek={setNumberStartOfWeek}
+              holidays={holidays}
               statusWeekends={statusWeekends}
-              setStatusWeekends={setStatusWeekends}
               setTasksDate={setTasksDate}
+              tasksDate={tasksDate}
+              rangeDays={rangeDays}
+              setRangeDays={setRangeDays}
             />
-          )}
-        </DatePickerBlock>
-      </ErrorBoundary>
-    </Theme>
-  );
-};
+            {showFilter && (
+              <DisplayFilter
+                statusWeekends={statusWeekends}
+                setStatusWeekends={setStatusWeekends}
+                setTasksDate={setTasksDate}
+              />
+            )}
+          </DatePickerBlock>
+        </ErrorBoundary>
+      </Theme>
+    );
+  },
+);
