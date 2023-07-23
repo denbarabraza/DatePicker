@@ -79,13 +79,18 @@ export const DayCell = styled.div<{
     return 'none';
   }};
 
-  color: ${({ isEndDate, isStartDate, isActive, isWeekend, isHoliday }) => {
+  color: ${({ isEndDate, isStartDate, isActive, isWeekend }) => {
     if (isEndDate || isStartDate || isActive) {
       return usedColors.white;
     }
     if (isWeekend) {
       return usedColors.redOpacity;
     }
+
+    return '';
+  }};
+
+  color: ${({ isHoliday }) => {
     if (isHoliday) {
       return usedColors.greenOpacity;
     }
@@ -143,7 +148,7 @@ export const DayCell = styled.div<{
 `;
 
 export const TooltipBlock = styled.div`
-  width: ${({ theme }) => theme.valueInPercent.pr100};
+  width: ${({ theme }) => theme.valueInPercent.pr70};
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
