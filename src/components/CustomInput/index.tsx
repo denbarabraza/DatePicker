@@ -49,6 +49,8 @@ export const CustomInput: FC<ICustomInput> = memo(
     useEffect(() => {
       if (date) {
         setChooseDate(date.format(FormatEnum.YearMonthDayFormat));
+      } else {
+        setChooseDate('');
       }
     }, [date, setChooseDate]);
 
