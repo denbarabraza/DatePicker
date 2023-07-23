@@ -23,6 +23,8 @@ import { getDayOfWeek } from '@/utils/utils';
 
 import { DatePickerBlock, FilterItemIcon, GlobalStyle, InputFilterBlock } from './styled';
 
+const CALENDARAPI_KEY = process.env.CALENDAR_API_KEY;
+
 export const DatePicker: React.FC<IDatePicker> = ({ selectedDate, onChangeDate }) => {
   const [showMonthYear, setShowMonthYear] = useState(false);
   const [showFilter, setShowFilter] = useState(false);
@@ -68,7 +70,7 @@ export const DatePicker: React.FC<IDatePicker> = ({ selectedDate, onChangeDate }
   useEffect(() => {
     async function fetchHolidays() {
       const response = await fetch(
-        `https://calendarific.com/api/v2/holidays?&api_key=022eade2bfd82f139588f89b56a5be9d0f0d648e&country=BY&year=${year}`,
+        `https://calendarific.com/api/v2/holidays?&api_key=${CALENDARAPI_KEY}&country=BY&year=${year}`,
       );
       const data = await response.json();
 

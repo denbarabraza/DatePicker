@@ -8,6 +8,7 @@ import alias from '@rollup/plugin-alias';
 import external from 'rollup-plugin-peer-deps-external';
 import postcss from 'rollup-plugin-postcss';
 import { terser } from 'rollup-plugin-terser';
+import dotenv from 'rollup-plugin-dotenv';
 
 export default [
   {
@@ -40,12 +41,13 @@ export default [
       typescript({ tsconfig: './tsconfig.json' }),
       external(),
       terser(),
+      dotenv(),
     ],
   },
   {
     input: 'dist/esm/types/index.d.ts',
     output: [{ file: 'dist/index.d.ts', format: 'esm' }],
     external: ['styled-components'],
-    plugins: [dts()],
+    plugins: [dts(), dotenv()],
   },
 ];
