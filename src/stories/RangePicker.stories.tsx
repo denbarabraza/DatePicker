@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Meta, StoryFn } from '@storybook/react';
 import dayjs, { Dayjs } from 'dayjs';
 
-import { IDatePicker, IObj } from '@/components/DatePicker/interfaces';
+import { IDatePicker, IRangeDateObj } from '@/components/DatePicker/types';
 import { RangePicker } from '@/components/RangePicker';
 
 export default {
@@ -12,7 +12,7 @@ export default {
 
 const RangePickerTemplate: StoryFn<typeof RangePicker> = (args: IDatePicker) => {
   const [date, setDate] = useState<Dayjs>(dayjs());
-  const [rangeDays, setRangeDays] = useState<IObj>({
+  const [rangeDays, setRangeDays] = useState<IRangeDateObj>({
     from: '',
     to: '',
   });
@@ -20,7 +20,7 @@ const RangePickerTemplate: StoryFn<typeof RangePicker> = (args: IDatePicker) => 
   const handleDateChange = (date: Dayjs) => {
     setDate(date);
   };
-  const handleRangeDateChange = (date: IObj) => {
+  const handleRangeDateChange = (date: IRangeDateObj) => {
     setRangeDays(date);
   };
 

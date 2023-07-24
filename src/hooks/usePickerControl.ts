@@ -3,9 +3,9 @@ import { Dayjs } from 'dayjs';
 
 import {
   IHolidaysResponse,
-  IObj,
+  IRangeDateObj,
   ITaskInCalendar,
-} from '@/components/DatePicker/interfaces';
+} from '@/components/DatePicker/types';
 import { WeekendStatusEnum } from '@/components/Toggle/types';
 import { FormatEnum } from '@/constants/formatDate';
 import { getDayOfWeek } from '@/utils/utils';
@@ -14,7 +14,7 @@ const CALENDARAPI_KEY = process.env.CALENDAR_API_KEY;
 
 interface IUsePickerControl {
   onClickShowFilter: () => void;
-  rangeDays: IObj;
+  rangeDays: IRangeDateObj;
   setFromDate: (date: Dayjs) => void;
   setToDate: (date: Dayjs) => void;
   showFilter: boolean;
@@ -28,12 +28,12 @@ interface IUsePickerControl {
   setNumberStartOfWeek: (dayValue: string) => void;
   holidays: IHolidaysResponse | undefined | null;
   tasksDate?: ITaskInCalendar;
-  setRangeDays?: (date: IObj) => void;
+  setRangeDays?: (date: IRangeDateObj) => void;
 }
 
 export interface IUsePickerControlProps {
   selectedDate: Dayjs;
-  onChangeRange?: (date: IObj) => void;
+  onChangeRange?: (date: IRangeDateObj) => void;
 }
 
 export const usePickerControl = ({
@@ -48,7 +48,7 @@ export const usePickerControl = ({
   const [startOfWeek, setStartOfWeek] = useState<number>(1);
   const [holidays, setHolidays] = useState<IHolidaysResponse | undefined | null>();
   const [tasksDate, setTasksDate] = useState<ITaskInCalendar>({});
-  const [rangeDays, setRangeDays] = useState<IObj>({
+  const [rangeDays, setRangeDays] = useState<IRangeDateObj>({
     from: '',
     to: '',
   });

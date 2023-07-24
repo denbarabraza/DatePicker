@@ -1,6 +1,6 @@
 import React, { memo } from 'react';
 
-import { IDatePicker } from '@/components/DatePicker/interfaces';
+import { IDatePicker } from '@/components/DatePicker/types';
 import { DatePickerCalendar } from '@/components/DatePickerCalendar';
 import { DatePickerSelector } from '@/components/DatePickerSelector';
 import { DisplayYearMonths } from '@/components/DisplayMonths/DisplayYearMonths';

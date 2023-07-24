@@ -3,7 +3,8 @@ import dayjs, { Dayjs } from 'dayjs';
 
 import { IDatePickerCalendar } from '@/components/DatePickerCalendar/interface';
 import { FormatEnum } from '@/constants/formatDate';
-import { getCalendarRows, ICalendarCell } from '@/utils/utils';
+import { ICalendarCell } from '@/types/types';
+import { getCalendarRows } from '@/utils/utils';
 
 interface IUsePickerCalendarControl {
   rows: Array<ICalendarCell[]>;

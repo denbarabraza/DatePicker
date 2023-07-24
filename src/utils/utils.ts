@@ -1,8 +1,9 @@
 import dayjs, { Dayjs } from 'dayjs';
 import isoWeek from 'dayjs/plugin/isoWeek';
 
-import { IHolidays } from '@/components/DatePicker/interfaces';
+import { IHolidays } from '@/components/DatePicker/types';
 import { WeekendStatusEnum } from '@/components/Toggle/types';
+import { ICalendarCell } from '@/types/types';
 
 dayjs.extend(isoWeek);
 
@@ -16,16 +17,6 @@ export function changeDateMonth(date: Dayjs, isNextMonth: boolean): Dayjs {
   }
 
   return date.add(isNextMonth ? 1 : -1, 'month');
-}
-
-export interface ICalendarCell {
-  text: string;
-  value: Dayjs;
-  isCurrentMonth?: boolean;
-  isWeekend: boolean;
-  isToday?: boolean;
-  isHoliday?: boolean;
-  holidayName?: string;
 }
 
 export function getCalendarRows(
@@ -130,3 +121,8 @@ export const getDayOfWeek = (day: string): number => {
 
   return dayIndex === -1 ? -1 : dayIndex;
 };
+
+export const forwardPropGuard =
+  <TProps extends {}>(propKeys: Array<keyof TProps>) =>
+  (propName: string) =>
+    !propKeys.includes(propName as keyof TProps);

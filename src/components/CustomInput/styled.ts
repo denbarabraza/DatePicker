@@ -1,6 +1,10 @@
 import styled from 'styled-components';
 
-export const Container = styled.div<{ ruleDateInput: boolean }>`
+import { forwardPropGuard } from '@/utils/utils';
+
+export const Container = styled('div').withConfig({
+  shouldForwardProp: forwardPropGuard<{ ruleDateInput: boolean }>(['ruleDateInput']),
+})<{ ruleDateInput: boolean }>`
   display: flex;
   width: ${({ theme }) => theme.valueInPercent.pr100};
   align-items: center;

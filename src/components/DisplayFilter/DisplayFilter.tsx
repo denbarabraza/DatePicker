@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 
-import { ITaskInCalendar } from '@/components/DatePicker/interfaces';
+import { ITaskInCalendar } from '@/components/DatePicker/types';
 import { Toggle } from '@/components/Toggle';
 import { WeekendStatusEnum } from '@/components/Toggle/types';
 

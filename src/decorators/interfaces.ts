@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 import { Dayjs } from 'dayjs';
 
-import { IObj } from '@/components/DatePicker/interfaces';
+import { IRangeDateObj } from '@/components/DatePicker/types';
 import { IDisplayFilter } from '@/components/DisplayFilter';
 
 export interface IDecInputFilter extends IDisplayFilter {
@@ -9,7 +9,7 @@ export interface IDecInputFilter extends IDisplayFilter {
   date: false | Dayjs;
   onChooseDate: (date: Dayjs) => void;
   onClickShowFilter: () => void;
-  rangeDays: IObj;
+  rangeDays: IRangeDateObj;
   setFromDate: (date: Dayjs) => void;
   setToDate: (date: Dayjs) => void;
   children: ReactNode;

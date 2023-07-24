@@ -1,9 +1,9 @@
 import { Dayjs } from 'dayjs';
 
-import { IObj } from '@/components/DatePicker/interfaces';
+import { IRangeDateObj } from '@/components/DatePicker/types';
 
 export interface IRangePicker {
   selectedDate: Dayjs;
   onChangeDate: (date: Dayjs) => void;
-  onChangeRange: (date: IObj) => void;
+  onChangeRange: (date: IRangeDateObj) => void;
 }

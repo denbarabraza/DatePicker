@@ -20,7 +20,7 @@
     "moduleResolution": "node",
     "allowSyntheticDefaultImports": true,
     "emitDeclarationOnly": true,
-    "declarationDir": "types",
+    "declarationDir": "types"
   },
   "include": [
     "src",
@@ -29,6 +29,7 @@
   ],
   "exclude": [
     "node_modules",
-    "build"
+    "build",
+    "src/**/*.test.ts"
   ]
 }

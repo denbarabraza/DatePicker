@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 
+import { DayCellProps } from '@/components/DatePicker/types';
 import { usedColors } from '@/theme/theme';
+import { forwardPropGuard } from '@/utils/utils';
 
 export const CalendarBlock = styled.div`
   display: flex;
@@ -18,7 +20,9 @@ export const CalendarHeader = styled.div`
   height: ${({ theme }) => theme.valueInPx.px50};
 `;
 
-export const CalendarCell = styled.div<{ isStartOfWeek: boolean }>`
+export const CalendarCell = styled('div').withConfig({
+  shouldForwardProp: forwardPropGuard<{ isStartOfWeek: boolean }>(['isStartOfWeek']),
+})<{ isStartOfWeek: boolean }>`
   padding: ${({ theme }) => theme.valueInPx.px5};
   width: ${({ theme }) => theme.valueInPx.px20};
   display: flex;
@@ -29,7 +33,9 @@ export const CalendarCell = styled.div<{ isStartOfWeek: boolean }>`
     isStartOfWeek ? `1px solid ${usedColors.lightGray}` : 'none'};
 `;
 
-export const CalendarRow = styled.div<{ withWeekends: boolean }>`
+export const CalendarRow = styled('div').withConfig({
+  shouldForwardProp: forwardPropGuard<{ withWeekends: boolean }>(['withWeekends']),
+})<{ withWeekends: boolean }>`
   width: ${({ theme }) => theme.valueInPercent.pr100};
   display: flex;
   justify-content: space-around;
@@ -37,16 +43,18 @@ export const CalendarRow = styled.div<{ withWeekends: boolean }>`
   grid-template-columns: repeat(${({ withWeekends }) => (withWeekends ? 7 : 5)}, 1fr);
 `;
 
-export const DayCell = styled.div<{
-  isActive: boolean;
-  isCurrentMonth: boolean;
-  isWeekend: boolean;
-  isToday: boolean;
-  isHoliday: boolean;
-  isInRange: boolean;
-  isStartDate: boolean | undefined;
-  isEndDate: boolean | undefined;
-}>`
+export const DayCell = styled('div').withConfig({
+  shouldForwardProp: forwardPropGuard<DayCellProps>([
+    'isActive',
+    'isCurrentMonth',
+    'isWeekend',
+    'isToday',
+    'isHoliday',
+    'isInRange',
+    'isStartDate',
+    'isEndDate',
+  ]),
+})<DayCellProps>`
   display: flex;
   align-items: center;
   justify-content: center;
