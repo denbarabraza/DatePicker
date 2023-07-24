@@ -1,12 +1,13 @@
-import React, { memo, useCallback, useEffect, useMemo, useState } from 'react';
-import dayjs, { Dayjs } from 'dayjs';
+import React, { memo } from 'react';
+import dayjs from 'dayjs';
 
 import { CustomInput } from '@/components/CustomInput';
 import { InputEnum } from '@/components/CustomInput/interface';
-import { IDatePickerCalendarProps } from '@/components/DatePickerCalendar/interface';
+import { IDatePickerCalendar } from '@/components/DatePickerCalendar/interface';
 import { WeekendStatusEnum } from '@/components/Toggle/types';
 import { FormatEnum } from '@/constants/formatDate';
-import { getCalendarRows, getDayOfWeek } from '@/utils/utils';
+import { usePickerControl } from '@/hooks/usePickerCalendarControl';
+import { getDayOfWeek } from '@/utils/utils';
 
 import {
   CalendarBlock,
@@ -24,7 +25,7 @@ import {
   TooltipItem,
 } from './styled';
 
-export const DatePickerCalendar: React.FC<IDatePickerCalendarProps> = memo(
+export const DatePickerCalendar: React.FC<IDatePickerCalendar> = memo(
   ({
     shownDate,
     selectedDate,
@@ -38,133 +39,37 @@ export const DatePickerCalendar: React.FC<IDatePickerCalendarProps> = memo(
     rangeDays,
     setRangeDays,
   }) => {
-    const [holiday, setHoliday] = useState<null | string>(null);
-    const [showTooltip, setShowTooltip] = useState(false);
-    const [showTaskControl, setShowTaskControl] = useState(false);
-    const [taskValue, setTaskValue] = useState('');
+    const {
+      rows,
+      rangeNoEmpty,
+      holiday,
+      taskValue,
+      showTooltip,
+      showTaskControl,
+      handleMouseEnter,
+      handleMouseLeave,
+      setTaskInCalendar,
+      setTaskValue,
+      changeStartWeekDay,
+      onClearRangeDays,
+      getEndDateForClasses,
+      handleSelectDate,
+      isInRange,
+    } = usePickerControl({
+      shownDate,
+      selectedDate,
+      onChangeDate,
+      startOfWeek,
+      setStartOfWeek,
+      holidays,
+      statusWeekends,
+      setTasksDate,
+      tasksDate,
+      rangeDays,
+      setRangeDays,
+    });
 
-    const dateKey = selectedDate.format(FormatEnum.YearMonthDayFormat);
-    const rangeNoEmpty = rangeDays?.from && rangeDays?.to;
-
-    const handleMouseEnter = useCallback(
-      (tooltip: string | undefined) => () => {
-        if (tooltip) {
-          setHoliday(tooltip);
-          setShowTooltip(true);
-        }
-      },
-      [setHoliday, setShowTooltip],
-    );
-
-    const handleMouseLeave = useCallback(() => {
-      setHoliday(null);
-      setShowTooltip(false);
-    }, [setHoliday, setShowTooltip]);
-
-    const isInRange = (date: Dayjs, startDate: string, endDate: string) => {
-      return date.isAfter(startDate, 'day') && date.isBefore(endDate, 'day');
-    };
-    const handleSelectDate = useCallback(
-      (value: Dayjs) => () => {
-        if (onChangeDate) {
-          setShowTaskControl(true);
-          onChangeDate(value);
-        }
-
-        if (setRangeDays) {
-          const getDayFormat = (day: Dayjs) => {
-            return dayjs(day).format(FormatEnum.YearMonthDayFormat);
-          };
-
-          const dateFormat = getDayFormat(value);
-
-          if (!rangeDays?.from && !rangeDays?.to.length) {
-            setRangeDays({ from: dateFormat, to: '' });
-          }
-          if (!rangeDays?.to && rangeDays?.from) {
-            handleChangeState(rangeDays?.from, dateFormat);
-          } else if (!rangeDays?.to.length && rangeDays?.from) {
-            handleChangeState(rangeDays?.from, dateFormat);
-          } else if (rangeNoEmpty) {
-            setRangeDays({ from: dateFormat, to: '' });
-          }
-        }
-      },
-      [onChangeDate, setRangeDays, rangeDays, setShowTaskControl],
-    );
-
-    const handleChangeState = useCallback(
-      (from: string, to: string) => {
-        if (setRangeDays) {
-          if (dayjs(from).isBefore(to)) {
-            setRangeDays({
-              from,
-              to,
-            });
-          } else {
-            setRangeDays({
-              from: to,
-              to: from,
-            });
-          }
-        }
-      },
-      [setRangeDays],
-    );
-
-    const getEndDateForClasses = useCallback(() => {
-      if (rangeDays) {
-        if (rangeDays.to) return rangeDays.to;
-
-        return rangeDays.from;
-      }
-
-      return '';
-    }, [rangeDays]);
-
-    const onClearRangeDays = useCallback(() => {
-      if (setRangeDays) {
-        setRangeDays({
-          from: '',
-          to: '',
-        });
-      }
-    }, [setRangeDays]);
-
-    const changeStartWeekDay = useCallback(
-      (value: string) => () => {
-        setStartOfWeek(value);
-      },
-      [setStartOfWeek],
-    );
-
-    const setTaskInCalendar = useCallback(() => {
-      const tasksForDate = tasksDate[dateKey] || [];
-
-      if (taskValue) {
-        const updatedTasks = { ...tasksDate, [dateKey]: [...tasksForDate, taskValue] };
-
-        setTasksDate(updatedTasks);
-        localStorage.setItem('tasks', JSON.stringify(updatedTasks));
-      }
-    }, [dateKey, setTasksDate, taskValue, tasksDate]);
-
-    const rows = useMemo(() => {
-      return getCalendarRows(
-        shownDate,
-        startOfWeek,
-        holidays?.response.holidays,
-        statusWeekends,
-      );
-    }, [shownDate, startOfWeek, holidays, statusWeekends]);
-
-    useEffect(() => {
-      const storedTasks = localStorage.getItem('tasks');
-
-      if (storedTasks) {
-        setTasksDate(JSON.parse(storedTasks));
-      }
-    }, [setTasksDate]);
+    const dateKey = selectedDate?.format(FormatEnum.YearMonthDayFormat);
 
     return (
       <CalendarBlock>
@@ -196,7 +101,7 @@ export const DatePickerCalendar: React.FC<IDatePickerCalendarProps> = memo(
                 holidayName,
               }) => {
                 const dateKey = value.format(FormatEnum.YearMonthDayFormat);
-                const tasksForDate = tasksDate[dateKey] || [];
+                const tasksForDate = tasksDate ? tasksDate[dateKey] || [] : [];
                 const isStartDate =
                   rangeDays &&
                   dateKey ===
@@ -242,14 +147,14 @@ export const DatePickerCalendar: React.FC<IDatePickerCalendarProps> = memo(
             <TooltipItem>{holiday}</TooltipItem>
           </TooltipBlock>
         )}
-        {tasksDate[dateKey] && (
+        {tasksDate && dateKey && tasksDate[dateKey] && (
           <TaskList>
             {tasksDate[dateKey].map(task => {
               return <Task key={`${task}-${dateKey}`}>{task}</Task>;
             })}
           </TaskList>
         )}
-        {showTaskControl && (
+        {tasksDate && showTaskControl && (
           <CustomInput
             type={InputEnum.Task}
             taskValue={taskValue}
@@ -258,7 +163,7 @@ export const DatePickerCalendar: React.FC<IDatePickerCalendarProps> = memo(
             placeholder='Task for the selected date'
           />
         )}
-        {rangeNoEmpty && (
+        {rangeDays && rangeNoEmpty && (
           <ClearRangeBlock>
             <ClearRangeItem onClick={onClearRangeDays}>Clear the range</ClearRangeItem>
           </ClearRangeBlock>

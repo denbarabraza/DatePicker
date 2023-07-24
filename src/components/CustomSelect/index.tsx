@@ -22,7 +22,7 @@ export const CustomSelect: FC<ICustomSelect> = ({ selectedValue, onSelect, type 
     onSelect(year);
   };
 
-  const years = range(1980, 2050);
+  const years = range(1995, 2050);
 
   const onClickOpenSelect = () => {
     if (typeRule) {

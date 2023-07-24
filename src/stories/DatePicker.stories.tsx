@@ -10,7 +10,7 @@ export default {
   component: DatePicker,
 } as Meta<typeof DatePicker>;
 
-const Template: StoryFn<typeof DatePicker> = (args: IDatePicker) => {
+const DatePickerTemplate: StoryFn<typeof DatePicker> = (args: IDatePicker) => {
   const [date, setDate] = useState<Dayjs>(dayjs());
 
   const handleDateChange = (date: Dayjs) => {
@@ -25,4 +25,4 @@ const Template: StoryFn<typeof DatePicker> = (args: IDatePicker) => {
   );
 };
 
-export const DatePickerStories = Template.bind({});
+export const DatePickerStories = DatePickerTemplate.bind({});
