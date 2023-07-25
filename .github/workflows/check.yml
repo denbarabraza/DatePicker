@@ -21,10 +21,11 @@ jobs:
       - name: Staring Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
         with:
-            node-version: ${{ matrix.node-version }}
-      - name: Test
-        run: yarn test
+          node-version: ${{ matrix.node-version }}
       - name: Build Storybook
         run: yarn build-storybook
+      - name: Test
+        run: yarn test
+
 
 
