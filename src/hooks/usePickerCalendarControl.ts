@@ -3,26 +3,8 @@ import dayjs, { Dayjs } from 'dayjs';
 
 import { IDatePickerCalendar } from '@/components/DatePickerCalendar/interface';
 import { FormatEnum } from '@/constants/formatDate';
-import { ICalendarCell } from '@/types/types';
+import { IUsePickerCalendarControl } from '@/types/types';
 import { getCalendarRows } from '@/utils/utils';
-
-interface IUsePickerCalendarControl {
-  rows: Array<ICalendarCell[]>;
-  rangeNoEmpty: string | undefined;
-  holiday: null | string;
-  taskValue: string;
-  showTooltip: boolean;
-  showTaskControl: boolean;
-  handleMouseEnter: (tooltip: string | undefined) => () => void;
-  handleMouseLeave: () => void;
-  setTaskInCalendar: () => void;
-  setTaskValue: (task: string) => void;
-  changeStartWeekDay: (value: string) => () => void;
-  onClearRangeDays: () => void;
-  getEndDateForClasses: () => string;
-  handleSelectDate: (value: Dayjs) => () => void;
-  isInRange: (date: Dayjs, startDate: string, endDate: string) => boolean;
-}
 
 export const usePickerControl = ({
   shownDate,

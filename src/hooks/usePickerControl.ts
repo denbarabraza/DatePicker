@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Dayjs } from 'dayjs';
 
 import {
@@ -8,33 +8,10 @@ import {
 } from '@/components/DatePicker/types';
 import { WeekendStatusEnum } from '@/components/Toggle/types';
 import { FormatEnum } from '@/constants/formatDate';
+import { IUsePickerControl, IUsePickerControlProps } from '@/types/types';
 import { getDayOfWeek } from '@/utils/utils';
 
 const CALENDARAPI_KEY = process.env.CALENDAR_API_KEY;
-
-interface IUsePickerControl {
-  onClickShowFilter: () => void;
-  rangeDays: IRangeDateObj;
-  setFromDate: (date: Dayjs) => void;
-  setToDate: (date: Dayjs) => void;
-  showFilter: boolean;
-  statusWeekends: WeekendStatusEnum;
-  setStatusWeekends: (status: WeekendStatusEnum) => void;
-  setTasksDate: (value: ITaskInCalendar) => void;
-  onClickShowMonthYear: () => void;
-  showMonthYear: boolean;
-  setShowMonthYear: Dispatch<SetStateAction<boolean>>;
-  startOfWeek: number;
-  setNumberStartOfWeek: (dayValue: string) => void;
-  holidays: IHolidaysResponse | undefined | null;
-  tasksDate?: ITaskInCalendar;
-  setRangeDays?: (date: IRangeDateObj) => void;
-}
-
-export interface IUsePickerControlProps {
-  selectedDate: Dayjs;
-  onChangeRange?: (date: IRangeDateObj) => void;
-}
 
 export const usePickerControl = ({
   selectedDate,
