@@ -23,7 +23,7 @@ jobs:
         with:
           node-version: ${{ matrix.version }}
       - name: Build
-        run: yarn rollup
+        run: yarn run rollup
       - name: Test
         run: yarn run test
       - name: Build Storybook
