@@ -22,8 +22,6 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.version }}
-      - name: Install dependencies
-        run: yarn install --frozen-lockfile
       - name: Build
         run: yarn rollup
       - name: Test
