@@ -55,7 +55,7 @@ export const CustomInput: FC<ICustomInput> = memo(
     }, [date, setChooseDate]);
 
     return (
-      <Container ruleDateInput={ruleDateInput}>
+      <Container ruleDateInput={ruleDateInput} data-cy='inputItem'>
         <InputContainer>
           {ruleDateInput ? (
             <>
@@ -69,13 +69,14 @@ export const CustomInput: FC<ICustomInput> = memo(
                 onChange={onChangeInput}
                 onKeyUp={onKeyUp}
               />
-              <DelIcon onClick={onClickDel}>
+              <DelIcon onClick={onClickDel} data-cy='delIcon'>
                 <DeleteIcon />
               </DelIcon>
             </>
           ) : (
             <InputItem
               type='text'
+              data-cy='inputItemTask'
               placeholder={placeholder}
               value={taskValue}
               onChange={onChangeInput}

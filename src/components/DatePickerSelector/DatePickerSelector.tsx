@@ -24,10 +24,10 @@ export const DatePickerSelector: React.FC<IDatePickerSelectorProps> = memo(
         <LeftSelectorIcon onClick={handleIconClick(false)}>
           <ChevronDownIcon />
         </LeftSelectorIcon>
-        <SelectorDateItem onClick={setShowMonthYear}>
+        <SelectorDateItem onClick={setShowMonthYear} data-cy='dateInSelector'>
           {shownDate?.format('MMMM YYYY')}
         </SelectorDateItem>
-        <RightSelectorIcon onClick={handleIconClick(true)}>
+        <RightSelectorIcon onClick={handleIconClick(true)} data-cy='nextIcon'>
           <ChevronDownIcon />
         </RightSelectorIcon>
       </SelectorItem>
