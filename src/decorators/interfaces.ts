@@ -2,7 +2,7 @@ import { ReactNode } from 'react';
 import { Dayjs } from 'dayjs';
 
 import { IRangeDateObj } from '@/components/DatePicker/types';
-import { IDisplayFilter } from '@/components/DisplayFilter';
+import { IDisplayFilter } from '@/components/DisplayFilter/interface';
 
 export interface IDecInputFilter extends IDisplayFilter {
   datePicker: boolean;

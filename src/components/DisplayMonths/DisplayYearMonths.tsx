@@ -1,16 +1,10 @@
 import React, { FC, memo } from 'react';
-import { Dayjs } from 'dayjs';
 
 import { CustomSelect } from '@/components/CustomSelect';
 import { SelectEnum } from '@/components/CustomSelect/interface';
 
+import { IDisplayYearMonths } from './interface';
 import { Wrapper } from './styled';
-
-interface IDisplayYearMonths {
-  shownDate: Dayjs;
-  onChangeDate: (date: Dayjs) => void;
-  setShowMonthYear: (value: boolean) => void;
-}
 
 export const DisplayYearMonths: FC<IDisplayYearMonths> = memo(
   ({ shownDate, onChangeDate, setShowMonthYear }) => {

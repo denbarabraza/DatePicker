@@ -9,6 +9,7 @@ import external from 'rollup-plugin-peer-deps-external';
 import postcss from 'rollup-plugin-postcss';
 import { terser } from 'rollup-plugin-terser';
 import dotenv from 'rollup-plugin-dotenv';
+import replace from '@rollup/plugin-replace';
 
 export default [
   {
@@ -42,6 +43,9 @@ export default [
       external(),
       terser(),
       dotenv(),
+      replace({
+        'process.env.CALENDAR_API_KEY': JSON.stringify(process.env.CALENDAR_API_KEY),
+      }),
     ],
   },
   {

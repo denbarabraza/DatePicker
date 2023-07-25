@@ -1,31 +1,22 @@
-import React, { FC } from 'react';
+import React, { FC, memo } from 'react';
 
-import { ITaskInCalendar } from '@/components/DatePicker/types';
 import { Toggle } from '@/components/Toggle';
-import { WeekendStatusEnum } from '@/components/Toggle/types';
 
+import { IDisplayFilter } from './interface';
 import { RemoveInfo, Wrapper } from './styled';
 
-export interface IDisplayFilter {
-  statusWeekends: WeekendStatusEnum;
-  setStatusWeekends: (status: WeekendStatusEnum) => void;
-  setTasksDate: (value: ITaskInCalendar) => void;
-}
+export const DisplayFilter: FC<IDisplayFilter> = memo(
+  ({ statusWeekends, setStatusWeekends, setTasksDate }) => {
+    const onClickRemoveTaskHandler = () => {
+      setTasksDate({});
+      localStorage.removeItem('tasks');
+    };
 
-export const DisplayFilter: FC<IDisplayFilter> = ({
-  statusWeekends,
-  setStatusWeekends,
-  setTasksDate,
-}) => {
-  const onClickRemoveTaskHandler = () => {
-    setTasksDate({});
-    localStorage.removeItem('tasks');
-  };
-
-  return (
-    <Wrapper data-testid='displayFilter'>
-      <Toggle statusWeekends={statusWeekends} setStatusWeekends={setStatusWeekends} />
-      <RemoveInfo onClick={onClickRemoveTaskHandler}>Remove all tasks</RemoveInfo>
-    </Wrapper>
-  );
-};
+    return (
+      <Wrapper data-testid='displayFilter'>
+        <Toggle statusWeekends={statusWeekends} setStatusWeekends={setStatusWeekends} />
+        <RemoveInfo onClick={onClickRemoveTaskHandler}>Remove all tasks</RemoveInfo>
+      </Wrapper>
+    );
+  },
+);
