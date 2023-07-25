@@ -1,3 +1,6 @@
+import { IHolidays } from '../components/DatePicker/types';
+import { WeekendStatusEnum } from '../components/Toggle/types';
+
 import {
   changeDateMonth,
   forwardPropGuard,
@@ -28,11 +31,33 @@ describe('getDayOfWeek', () => {
 describe('getCalendarRows', () => {
   const date = dayjs('2023-07-01');
   const startOfWeek = 1;
-  const holidays = [
-    { date: { iso: '2023-07-04' }, name: 'Independence Day' },
-    { date: { iso: '2023-07-07' }, name: 'Labor Day' },
+  const holidays: IHolidays[] = [
+    {
+      canonical_url: 'string',
+      country: { id: 'string', name: 'string' },
+      date: { iso: '2023-07-04', datetime: { year: 2023, month: 7, day: 4 } },
+      description: 'string',
+      locations: 'string',
+      name: 'Independence Day',
+      primary_type: 'string',
+      states: 'string',
+      type: [],
+      urlid: 'string',
+    },
+    {
+      canonical_url: 'string',
+      country: { id: 'string', name: 'string' },
+      date: { iso: '2023-07-07', datetime: { year: 2023, month: 7, day: 7 } },
+      description: 'string',
+      locations: 'string',
+      name: 'Labor Day',
+      primary_type: 'string',
+      states: 'string',
+      type: [],
+      urlid: 'string',
+    },
   ];
-  const statusWeekends = 'IncludeWeekEnds';
+  const statusWeekends = WeekendStatusEnum.WithWeekEnds;
 
   test('returns the calendar rows for July 2023', () => {
     const rows = getCalendarRows(date, startOfWeek, holidays, statusWeekends);

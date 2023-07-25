@@ -63,7 +63,6 @@ export const CustomInput: FC<ICustomInput> = memo(
                 <CalendarIcon />
               </CalIcon>
               <InputItem
-                data-testid='textboxInput'
                 type='text'
                 placeholder={placeholder}
                 value={chooseDate}

@@ -23,7 +23,7 @@ export const DisplayFilter: FC<IDisplayFilter> = ({
   };
 
   return (
-    <Wrapper>
+    <Wrapper data-testid='displayFilter'>
       <Toggle statusWeekends={statusWeekends} setStatusWeekends={setStatusWeekends} />
       <RemoveInfo onClick={onClickRemoveTaskHandler}>Remove all tasks</RemoveInfo>
     </Wrapper>

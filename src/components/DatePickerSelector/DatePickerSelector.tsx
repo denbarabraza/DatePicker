@@ -20,7 +20,7 @@ export const DatePickerSelector: React.FC<IDatePickerSelectorProps> = memo(
     };
 
     return (
-      <SelectorItem data-testid='SelectorItem'>
+      <SelectorItem data-testid='selectorItem'>
         <LeftSelectorIcon onClick={handleIconClick(false)}>
           <ChevronDownIcon />
         </LeftSelectorIcon>

@@ -72,7 +72,7 @@ export const DatePickerCalendar: React.FC<IDatePickerCalendar> = memo(
     const dateKey = selectedDate?.format(FormatEnum.YearMonthDayFormat);
 
     return (
-      <CalendarBlock>
+      <CalendarBlock data-testid='calendarItem'>
         <CalendarHeader>
           {rows[0].map(({ value }, i) => (
             <CalendarCell
@@ -120,6 +120,7 @@ export const DatePickerCalendar: React.FC<IDatePickerCalendar> = memo(
 
                 return (
                   <DayCell
+                    data-testid='dayCell'
                     key={`${text} - ${value}`}
                     isActive={value.toString() === selectedDate?.toString()}
                     isCurrentMonth={isCurrentMonth || false}
@@ -148,13 +149,13 @@ export const DatePickerCalendar: React.FC<IDatePickerCalendar> = memo(
           </TooltipBlock>
         )}
         {tasksDate && dateKey && tasksDate[dateKey] && (
-          <TaskList>
+          <TaskList data-testid='taskList'>
             {tasksDate[dateKey].map(task => {
               return <Task key={`${task}-${dateKey}`}>{task}</Task>;
             })}
           </TaskList>
         )}
-        {tasksDate && showTaskControl && (
+        {showTaskControl && (
           <CustomInput
             type={InputEnum.Task}
             taskValue={taskValue}
@@ -163,7 +164,7 @@ export const DatePickerCalendar: React.FC<IDatePickerCalendar> = memo(
             placeholder='Task for the selected date'
           />
         )}
-        {rangeDays && rangeNoEmpty && (
+        {rangeNoEmpty && (
           <ClearRangeBlock>
             <ClearRangeItem onClick={onClearRangeDays}>Clear the range</ClearRangeItem>
           </ClearRangeBlock>
