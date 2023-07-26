@@ -70,7 +70,7 @@ export const usePickerControl = ({
   useEffect(() => {
     async function fetchHolidays() {
       const response = await fetch(
-        `https://calendarific.com/api/v2/holidays?&api_key=${CALENDARAPI_KEY}&country=BY&year=${year}`,
+        `https://calendarific.com/api/v2/holidays?&api_key=a3f339b9b4ea095a31eb45d324e6ae4bedb48d0a&country=BY&year=${year}`,
       );
       const data = await response.json();
 

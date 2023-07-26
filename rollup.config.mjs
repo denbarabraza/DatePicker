@@ -52,6 +52,6 @@ export default [
     input: 'dist/esm/types/index.d.ts',
     output: [{ file: 'dist/index.d.ts', format: 'esm' }],
     external: ['styled-components'],
-    plugins: [dts(), dotenv({ envKey: 'CALENDAR_API_KEY' })],
+    plugins: [dts(), dotenv()],
   },
 ];
