@@ -1,12 +1,11 @@
 import React, { memo } from 'react';
-import dayjs from 'dayjs';
 
+import { RemoveTaskIcon } from '@/assets/RemoveTaskIcon';
 import { CustomInput } from '@/components/CustomInput';
-import { InputEnum } from '@/components/CustomInput/interface';
-import { IDatePickerCalendar } from '@/components/DatePickerCalendar/interface';
-import { WeekendStatusEnum } from '@/components/Toggle/types';
+import { IPickerCalendar } from '@/components/PickerCalendar/interface';
+import { InputEnum, WeekendStatusEnum } from '@/constants/enums';
 import { FormatEnum } from '@/constants/formatDate';
-import { usePickerControl } from '@/hooks/usePickerCalendarControl';
+import { usePickerCalendarControl } from '@/hooks/usePickerCalendarControl';
 import { getDayOfWeek } from '@/utils/utils';
 
 import {
@@ -19,18 +18,18 @@ import {
   ClearRangeBlock,
   ClearRangeItem,
   DayCell,
+  RemoveIcon,
   Task,
   TaskList,
   TooltipBlock,
   TooltipItem,
 } from './styled';
 
-export const DatePickerCalendar: React.FC<IDatePickerCalendar> = memo(
+export const PickerCalendar: React.FC<IPickerCalendar> = memo(
   ({
     shownDate,
     selectedDate,
     onChangeDate,
-    startOfWeek,
     setStartOfWeek,
     holidays,
     statusWeekends,
@@ -38,6 +37,7 @@ export const DatePickerCalendar: React.FC<IDatePickerCalendar> = memo(
     tasksDate,
     rangeDays,
     setRangeDays,
+    startOfWeek,
   }) => {
     const {
       rows,
@@ -55,7 +55,10 @@ export const DatePickerCalendar: React.FC<IDatePickerCalendar> = memo(
       getEndDateForClasses,
       handleSelectDate,
       isInRange,
-    } = usePickerControl({
+      removeTaskFromCalendar,
+      isStartDate,
+      isEndDate,
+    } = usePickerCalendarControl({
       shownDate,
       selectedDate,
       onChangeDate,
@@ -102,20 +105,11 @@ export const DatePickerCalendar: React.FC<IDatePickerCalendar> = memo(
               }) => {
                 const dateKey = value.format(FormatEnum.YearMonthDayFormat);
                 const tasksForDate = tasksDate ? tasksDate[dateKey] || [] : [];
-                const isStartDate =
-                  rangeDays &&
-                  dateKey ===
-                    (dayjs(rangeDays.from).isBefore(getEndDateForClasses())
-                      ? rangeDays.from
-                      : rangeDays.to);
-                const isEndDate =
-                  rangeDays &&
-                  dateKey ===
-                    (dayjs(rangeDays.from).isBefore(getEndDateForClasses())
-                      ? rangeDays.to
-                      : rangeDays.from);
+                const endDate = getEndDateForClasses(rangeDays);
+                const isStartDateValue = isStartDate(rangeDays, dateKey, endDate);
+                const isEndDateValue = isEndDate(rangeDays, dateKey, endDate);
                 const isDateInRange = rangeDays
-                  ? isInRange(value, rangeDays?.from, getEndDateForClasses())
+                  ? isInRange(value, rangeDays?.from, getEndDateForClasses(rangeDays))
                   : false;
 
                 return (
@@ -130,8 +124,8 @@ export const DatePickerCalendar: React.FC<IDatePickerCalendar> = memo(
                     onClick={handleSelectDate(value)}
                     onMouseEnter={handleMouseEnter(holidayName)}
                     onMouseLeave={handleMouseLeave}
-                    isStartDate={isStartDate}
-                    isEndDate={isEndDate}
+                    isStartDate={isStartDateValue}
+                    isEndDate={isEndDateValue}
                     isInRange={isDateInRange}
                   >
                     {text}
@@ -151,7 +145,14 @@ export const DatePickerCalendar: React.FC<IDatePickerCalendar> = memo(
         {tasksDate && dateKey && tasksDate[dateKey] && (
           <TaskList data-testid='taskList'>
             {tasksDate[dateKey].map(task => {
-              return <Task key={`${task}-${dateKey}`}>{task}</Task>;
+              return (
+                <Task key={`${task}-${dateKey}`}>
+                  {task}
+                  <RemoveIcon onClick={removeTaskFromCalendar(task)}>
+                    <RemoveTaskIcon />
+                  </RemoveIcon>
+                </Task>
+              );
             })}
           </TaskList>
         )}

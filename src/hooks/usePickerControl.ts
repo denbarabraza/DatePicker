@@ -1,14 +1,14 @@
 import { useCallback, useEffect, useState } from 'react';
 import { Dayjs } from 'dayjs';
 
+import { WeekendStatusEnum } from '@/constants/enums';
+import { FormatEnum } from '@/constants/formatDate';
+import { IUsePickerControl, IUsePickerControlProps } from '@/interfaces/interfaces';
 import {
   IHolidaysResponse,
   IRangeDateObj,
   ITaskInCalendar,
-} from '@/components/DatePicker/types';
-import { WeekendStatusEnum } from '@/components/Toggle/types';
-import { FormatEnum } from '@/constants/formatDate';
-import { IUsePickerControl, IUsePickerControlProps } from '@/types/types';
+} from '@/pickers/DatePicker/interfaces';
 import { getDayOfWeek } from '@/utils/utils';
 
 const CALENDARAPI_KEY = process.env.CALENDAR_API_KEY;
@@ -70,7 +70,7 @@ export const usePickerControl = ({
   useEffect(() => {
     async function fetchHolidays() {
       const response = await fetch(
-        `https://calendarific.com/api/v2/holidays?&api_key=a3f339b9b4ea095a31eb45d324e6ae4bedb48d0a&country=BY&year=${year}`,
+        `https://calendarific.com/api/v2/holidays?&api_key=${CALENDARAPI_KEY}&country=BY&year=${year}`,
       );
       const data = await response.json();
 
@@ -86,6 +86,8 @@ export const usePickerControl = ({
     }
   }, [onChangeRange, rangeDays]);
 
+  useEffect(() => {}, [selectedDate]);
+
   return {
     onClickShowFilter,
     rangeDays,
@@ -99,6 +101,7 @@ export const usePickerControl = ({
     showMonthYear,
     setShowMonthYear,
     startOfWeek,
+    setStartOfWeek,
     setNumberStartOfWeek,
     holidays,
     tasksDate,

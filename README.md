@@ -114,6 +114,3 @@ Will be soon...
 [Styled-components](https://www.styled-components.com/docs)
 
 [Husky](https://dev.to/ivadyhabimana/setup-eslint-prettier-and-husky-in-a-node-project-a-step-by-step-guide-946)
-
-
-

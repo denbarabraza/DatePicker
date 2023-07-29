@@ -1,12 +1,12 @@
 import React, { memo } from 'react';
 
-import { IDatePicker } from '@/components/DatePicker/types';
-import { DatePickerCalendar } from '@/components/DatePickerCalendar';
-import { DatePickerSelector } from '@/components/DatePickerSelector';
 import { DisplayYearMonths } from '@/components/DisplayMonths/DisplayYearMonths';
+import { PickerCalendar } from '@/components/PickerCalendar';
+import { PickerSelector } from '@/components/PickerSelector';
 import { GlobalStylePicker } from '@/decorators/components/GlobalStylePicker';
 import InputFilterPicker from '@/decorators/components/InputFilterPicker';
 import { usePickerControl } from '@/hooks/usePickerControl';
+import { IDatePicker } from '@/pickers/DatePicker/interfaces';
 
 export const DatePicker: React.FC<IDatePicker> = memo(
   ({ selectedDate, onChangeDate }) => {
@@ -43,7 +43,7 @@ export const DatePicker: React.FC<IDatePicker> = memo(
           setStatusWeekends={setStatusWeekends}
           setTasksDate={setTasksDate}
         >
-          <DatePickerSelector
+          <PickerSelector
             shownDate={selectedDate}
             onChangeDate={onChangeDate}
             setShowMonthYear={onClickShowMonthYear}
@@ -55,7 +55,7 @@ export const DatePicker: React.FC<IDatePicker> = memo(
               setShowMonthYear={setShowMonthYear}
             />
           )}
-          <DatePickerCalendar
+          <PickerCalendar
             selectedDate={selectedDate}
             shownDate={selectedDate}
             onChangeDate={onChangeDate}

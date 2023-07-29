@@ -1,5 +1,5 @@
 {
-  "name": "date_range-picker",
+  "name": "denbarabraza_daterange_picker",
   "version": "1.0.0",
   "description": "Library for working with various types of calendar",
   "author": "Denis Bareischev",
@@ -93,7 +93,10 @@
   },
   "peerDependencies": {
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "styled-components": "^6.0.4",
+    "typescript": "^5.1.6",
+    "rollup-plugin-dotenv": "^0.5.0"
   },
   "eslintConfig": {
     "extends": [

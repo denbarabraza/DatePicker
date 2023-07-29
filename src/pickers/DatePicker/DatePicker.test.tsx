@@ -2,8 +2,8 @@ import React from 'react';
 import { fireEvent, render } from '@testing-library/react';
 import dayjs from 'dayjs';
 
-import { DatePicker } from '@/components/DatePicker/DatePicker';
 import { GlobalStylePicker } from '@/decorators/components/GlobalStylePicker';
+import { DatePicker } from '@/pickers/DatePicker/DatePicker';
 
 describe('DatePicker', () => {
   const mockChangeDate = jest.fn();

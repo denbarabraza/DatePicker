@@ -1,6 +1,7 @@
 import React, { FC, useState } from 'react';
 
-import { ICustomSelect, SelectEnum } from '@/components/CustomSelect/interface';
+import { ICustomSelect } from '@/components/CustomSelect/interface';
+import { SelectEnum } from '@/constants/enums';
 import { months } from '@/constants/monts';
 import { range } from '@/utils/utils';
 

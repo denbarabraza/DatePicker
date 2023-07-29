@@ -1,9 +1,9 @@
 import dayjs, { Dayjs } from 'dayjs';
 import isoWeek from 'dayjs/plugin/isoWeek';
 
-import { IHolidays } from '@/components/DatePicker/types';
-import { WeekendStatusEnum } from '@/components/Toggle/types';
-import { ICalendarCell } from '@/types/types';
+import { WeekendStatusEnum } from '@/constants/enums';
+import { ICalendarCell } from '@/interfaces/interfaces';
+import { IHolidays } from '@/pickers/DatePicker/interfaces';
 
 dayjs.extend(isoWeek);
 

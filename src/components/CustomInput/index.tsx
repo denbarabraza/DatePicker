@@ -3,9 +3,10 @@ import dayjs from 'dayjs';
 
 import { CalendarIcon } from '@/assets/CalendarIcon';
 import { DeleteIcon } from '@/assets/DeleteIcon';
+import { InputEnum } from '@/constants/enums';
 import { FormatEnum } from '@/constants/formatDate';
 
-import { ICustomInput, InputEnum } from './interface';
+import { ICustomInput } from './interface';
 import { CalIcon, Container, DelIcon, InputContainer, InputItem } from './styled';
 
 export const CustomInput: FC<ICustomInput> = memo(

@@ -1,12 +1,12 @@
 import { Dispatch, SetStateAction } from 'react';
 import { Dayjs } from 'dayjs';
 
+import { WeekendStatusEnum } from '@/constants/enums';
 import {
   IHolidaysResponse,
   IRangeDateObj,
   ITaskInCalendar,
-} from '@/components/DatePicker/types';
-import { WeekendStatusEnum } from '@/components/Toggle/types';
+} from '@/pickers/DatePicker/interfaces';
 
 export interface ICalendarCell {
   text: string;
@@ -31,6 +31,7 @@ export interface IUsePickerControl {
   showMonthYear: boolean;
   setShowMonthYear: Dispatch<SetStateAction<boolean>>;
   startOfWeek: number;
+  setStartOfWeek: Dispatch<SetStateAction<number>>;
   setNumberStartOfWeek: (dayValue: string) => void;
   holidays: IHolidaysResponse | undefined | null;
   tasksDate?: ITaskInCalendar;
@@ -53,9 +54,20 @@ export interface IUsePickerCalendarControl {
   handleMouseLeave: () => void;
   setTaskInCalendar: () => void;
   setTaskValue: (task: string) => void;
+  removeTaskFromCalendar: (task: string) => () => void;
   changeStartWeekDay: (value: string) => () => void;
   onClearRangeDays: () => void;
-  getEndDateForClasses: () => string;
+  isStartDate: (
+    rangeDays: IRangeDateObj | undefined,
+    dateKey: string,
+    endDate: string,
+  ) => boolean;
+  isEndDate: (
+    rangeDays: IRangeDateObj | undefined,
+    dateKey: string,
+    endDate: string,
+  ) => boolean;
+  getEndDateForClasses: (rangeDays: IRangeDateObj | undefined) => string;
   handleSelectDate: (value: Dayjs) => () => void;
   isInRange: (date: Dayjs, startDate: string, endDate: string) => boolean;
 }

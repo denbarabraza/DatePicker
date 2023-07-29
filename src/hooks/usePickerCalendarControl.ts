@@ -1,24 +1,25 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import dayjs, { Dayjs } from 'dayjs';
 
-import { IDatePickerCalendar } from '@/components/DatePickerCalendar/interface';
+import { IPickerCalendar } from '@/components/PickerCalendar/interface';
 import { FormatEnum } from '@/constants/formatDate';
-import { IUsePickerCalendarControl } from '@/types/types';
+import { IUsePickerCalendarControl } from '@/interfaces/interfaces';
+import { IRangeDateObj } from '@/pickers/DatePicker/interfaces';
 import { getCalendarRows } from '@/utils/utils';
 
-export const usePickerControl = ({
-  shownDate,
+export const usePickerCalendarControl = ({
   selectedDate,
   onChangeDate,
   startOfWeek,
   setStartOfWeek,
   holidays,
+  shownDate,
   statusWeekends,
   setTasksDate,
   tasksDate,
   rangeDays,
   setRangeDays,
-}: IDatePickerCalendar): IUsePickerCalendarControl => {
+}: IPickerCalendar): IUsePickerCalendarControl => {
   const [holiday, setHoliday] = useState<null | string>(null);
   const [showTooltip, setShowTooltip] = useState(false);
   const [showTaskControl, setShowTaskControl] = useState(false);
@@ -92,16 +93,6 @@ export const usePickerControl = ({
     [setRangeDays],
   );
 
-  const getEndDateForClasses = useCallback(() => {
-    if (rangeDays) {
-      if (rangeDays.to) return rangeDays.to;
-
-      return rangeDays.from;
-    }
-
-    return '';
-  }, [rangeDays]);
-
   const onClearRangeDays = useCallback(() => {
     if (setRangeDays) {
       setRangeDays({
@@ -132,6 +123,26 @@ export const usePickerControl = ({
     }
   }, [setTasksDate, taskValue, tasksDate]);
 
+  const removeTaskFromCalendar = useCallback(
+    (taskToRemove: string) => () => {
+      if (selectedDate) {
+        const dateKey = selectedDate?.format(FormatEnum.YearMonthDayFormat);
+        const tasksForDate = tasksDate ? tasksDate[dateKey] || [] : [];
+
+        if (setTasksDate) {
+          const updatedTasks = {
+            ...tasksDate,
+            [dateKey]: tasksForDate.filter(task => task !== taskToRemove),
+          };
+
+          setTasksDate(updatedTasks);
+          localStorage.setItem('tasks', JSON.stringify(updatedTasks));
+        }
+      }
+    },
+    [selectedDate, setTasksDate, tasksDate],
+  );
+
   const rows = useMemo(() => {
     return getCalendarRows(
       shownDate,
@@ -149,6 +160,46 @@ export const usePickerControl = ({
     }
   }, [setTasksDate]);
 
+  const getEndDateForClasses = useCallback((rangeDays: IRangeDateObj | undefined) => {
+    if (rangeDays) {
+      if (rangeDays.to) return rangeDays.to;
+
+      return rangeDays.from;
+    }
+
+    return '';
+  }, []);
+
+  const isStartDate = (
+    rangeDays: IRangeDateObj | undefined,
+    dateKey: string,
+    endDate: string,
+  ) => {
+    if (rangeDays) {
+      return (
+        dateKey ===
+        (dayjs(rangeDays.from).isBefore(endDate) ? rangeDays.from : rangeDays.to)
+      );
+    }
+
+    return false;
+  };
+
+  const isEndDate = (
+    rangeDays: IRangeDateObj | undefined,
+    dateKey: string,
+    endDate: string,
+  ) => {
+    if (rangeDays) {
+      return (
+        dateKey ===
+        (dayjs(rangeDays.from).isBefore(endDate) ? rangeDays.to : rangeDays.from)
+      );
+    }
+
+    return false;
+  };
+
   return {
     rows,
     rangeNoEmpty,
@@ -163,7 +214,10 @@ export const usePickerControl = ({
     changeStartWeekDay,
     onClearRangeDays,
     getEndDateForClasses,
+    isStartDate,
+    isEndDate,
     handleSelectDate,
     isInRange,
+    removeTaskFromCalendar,
   };
 };

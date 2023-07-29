@@ -1,15 +1,15 @@
 import { Dayjs } from 'dayjs';
 
+import { WeekendStatusEnum } from '@/constants/enums';
 import {
   IHolidaysResponse,
   IRangeDateObj,
   ITaskInCalendar,
-} from '@/components/DatePicker/types';
-import { WeekendStatusEnum } from '@/components/Toggle/types';
+} from '@/pickers/DatePicker/interfaces';
 
-export interface IDatePickerCalendar {
+export interface IPickerCalendar {
   shownDate: Dayjs;
-  selectedDate?: Dayjs;
+  selectedDate: Dayjs;
   onChangeDate?: (date: Dayjs) => void;
   startOfWeek: number;
   setStartOfWeek: (startOfWeek: string) => void;

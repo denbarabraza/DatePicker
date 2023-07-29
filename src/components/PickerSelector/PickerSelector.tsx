@@ -1,7 +1,7 @@
-import React, { memo } from 'react';
+import React, { memo, useCallback } from 'react';
 
 import { ChevronDownIcon } from '@/assets/ChevronDownIcon';
-import { IDatePickerSelectorProps } from '@/components/DatePickerSelector/interface';
+import { IDatePickerSelectorProps } from '@/components/PickerSelector/interface';
 import { changeDateMonth } from '@/utils/utils';
 
 import {
@@ -11,13 +11,16 @@ import {
   SelectorItem,
 } from './styled';
 
-export const DatePickerSelector: React.FC<IDatePickerSelectorProps> = memo(
+export const PickerSelector: React.FC<IDatePickerSelectorProps> = memo(
   ({ shownDate, onChangeDate, setShowMonthYear }) => {
-    const handleIconClick = (isNextMonth: boolean) => {
-      return () => {
-        onChangeDate(changeDateMonth(shownDate, isNextMonth));
-      };
-    };
+    const handleIconClick = useCallback(
+      (isNextMonth: boolean) => {
+        return () => {
+          onChangeDate(changeDateMonth(shownDate, isNextMonth));
+        };
+      },
+      [onChangeDate, shownDate],
+    );
 
     return (
       <SelectorItem data-testid='selectorItem'>

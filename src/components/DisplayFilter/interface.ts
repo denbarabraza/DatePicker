@@ -1,5 +1,5 @@
-import { ITaskInCalendar } from '@/components/DatePicker/types';
-import { WeekendStatusEnum } from '@/components/Toggle/types';
+import { WeekendStatusEnum } from '@/constants/enums';
+import { ITaskInCalendar } from '@/pickers/DatePicker/interfaces';
 
 export interface IDisplayFilter {
   statusWeekends: WeekendStatusEnum;

@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { Meta, StoryFn } from '@storybook/react';
 import dayjs, { Dayjs } from 'dayjs';
 
-import { IDatePicker, IRangeDateObj } from '@/components/DatePicker/types';
-import { RangePicker } from '@/components/RangePicker';
+import { IDatePicker, IRangeDateObj } from '@/pickers/DatePicker/interfaces';
+import { RangePicker } from '@/pickers/RangePicker/index';
 
 export default {
   title: 'ReactComponentLibrary/RangePicker',

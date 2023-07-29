@@ -1,7 +1,4 @@
-export enum SelectEnum {
-  Month = 'day',
-  Year = 'currency',
-}
+import { SelectEnum } from '@/constants/enums';
 
 export interface ICustomSelect {
   type: SelectEnum;

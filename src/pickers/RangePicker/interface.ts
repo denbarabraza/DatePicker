@@ -1,6 +1,6 @@
 import { Dayjs } from 'dayjs';
 
-import { IRangeDateObj } from '@/components/DatePicker/types';
+import { IRangeDateObj } from '@/pickers/DatePicker/interfaces';
 
 export interface IRangePicker {
   selectedDate: Dayjs;

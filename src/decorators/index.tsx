@@ -2,10 +2,10 @@ import React from 'react';
 
 import { FilterIcon } from '@/assets/FilterIcon';
 import { CustomInput } from '@/components/CustomInput';
-import { InputEnum } from '@/components/CustomInput/interface';
-import { FilterItemIcon, InputFilterBlock } from '@/components/DatePicker/styled';
 import { DisplayFilter } from '@/components/DisplayFilter';
+import { InputEnum } from '@/constants/enums';
 import { IDecInputFilter, IGlobalStyle } from '@/decorators/interfaces';
+import { FilterItemIcon, InputFilterBlock } from '@/pickers/DatePicker/styled';
 
 export const widthInputFilter = <P extends object>(Component: React.ComponentType<P>) => {
   return (props: IDecInputFilter & P) => {

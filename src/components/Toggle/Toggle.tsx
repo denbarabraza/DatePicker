@@ -1,7 +1,9 @@
 import React, { FC, memo, useCallback } from 'react';
 
+import { IStatusWeekendsToggle } from '@/components/Toggle/interface';
+import { WeekendStatusEnum } from '@/constants/enums';
+
 import { ToggleContainer, ToggleInput, ToggleLabel, ToggleSlider } from './styled';
-import { IStatusWeekendsToggle, WeekendStatusEnum } from './types';
 
 export const Toggle: FC<IStatusWeekendsToggle> = memo(
   ({ statusWeekends, setStatusWeekends }) => {

@@ -1,9 +1,6 @@
 import { Dayjs } from 'dayjs';
 
-export enum InputEnum {
-  Task = 'task',
-  Date = 'date',
-}
+import { InputEnum } from '@/constants/enums';
 
 export interface ICustomInput {
   type: InputEnum;

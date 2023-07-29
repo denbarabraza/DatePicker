@@ -1,12 +1,12 @@
 import { ReactNode } from 'react';
 import { Dayjs } from 'dayjs';
 
-import { IRangeDateObj } from '@/components/DatePicker/types';
 import { IDisplayFilter } from '@/components/DisplayFilter/interface';
+import { IRangeDateObj } from '@/pickers/DatePicker/interfaces';
 
 export interface IDecInputFilter extends IDisplayFilter {
   datePicker: boolean;
-  date: false | Dayjs;
+  date: Dayjs;
   onChooseDate: (date: Dayjs) => void;
   onClickShowFilter: () => void;
   rangeDays: IRangeDateObj;

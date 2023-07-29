@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { DayCellProps } from '@/components/DatePicker/types';
+import { DayCellProps } from '@/pickers/DatePicker/interfaces';
 import { usedColors } from '@/theme/theme';
 import { forwardPropGuard } from '@/utils/utils';
 
@@ -191,6 +191,7 @@ export const CircleMarker = styled.div`
 
 export const TaskList = styled.div`
   display: flex;
+  position: relative;
   flex-direction: column;
   gap: ${({ theme }) => theme.valueInPx.px5};
   justify-content: flex-start;
@@ -200,6 +201,9 @@ export const TaskList = styled.div`
 `;
 
 export const Task = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   padding-left: ${({ theme }) => theme.valueInPx.px10};
   width: ${({ theme }) => theme.valueInPercent.pr100};
   background-color: ${({ theme }) => theme.usedColors.lightGrayOpacity};
@@ -220,6 +224,19 @@ export const CircleTaskMarker = styled.div`
     background-color: ${({ theme }) => theme.usedColors.greenOpacity};
     border-radius: ${({ theme }) => theme.valueInPercent.pr50};
     margin-right: ${({ theme }) => theme.valueInPx.px10};
+  }
+`;
+
+export const RemoveIcon = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
+  padding-right: ${({ theme }) => theme.valueInPx.px5};
+
+  &:hover {
+    transform: scale(1.2);
   }
 `;
 

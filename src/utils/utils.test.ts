@@ -1,5 +1,5 @@
-import { IHolidays } from '../components/DatePicker/types';
-import { WeekendStatusEnum } from '../components/Toggle/types';
+import { WeekendStatusEnum } from '../components/Toggle/interface';
+import { IHolidays } from '../pickers/DatePicker/interfaces';
 
 import {
   changeDateMonth,

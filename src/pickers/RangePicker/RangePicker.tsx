@@ -1,12 +1,12 @@
 import React, { FC } from 'react';
 
-import { DatePickerCalendar } from '@/components/DatePickerCalendar';
-import { DatePickerSelector } from '@/components/DatePickerSelector';
 import { DisplayYearMonths } from '@/components/DisplayMonths';
-import { IRangePicker } from '@/components/RangePicker/interface';
+import { PickerCalendar } from '@/components/PickerCalendar';
+import { PickerSelector } from '@/components/PickerSelector';
 import { GlobalStylePicker } from '@/decorators/components/GlobalStylePicker';
 import InputFilterPicker from '@/decorators/components/InputFilterPicker';
 import { usePickerControl } from '@/hooks/usePickerControl';
+import { IRangePicker } from '@/pickers/RangePicker/interface';
 
 export const RangePicker: FC<IRangePicker> = ({
   selectedDate,
@@ -46,7 +46,7 @@ export const RangePicker: FC<IRangePicker> = ({
         setStatusWeekends={setStatusWeekends}
         setTasksDate={setTasksDate}
       >
-        <DatePickerSelector
+        <PickerSelector
           shownDate={selectedDate}
           onChangeDate={onChangeDate}
           setShowMonthYear={onClickShowMonthYear}
@@ -58,7 +58,7 @@ export const RangePicker: FC<IRangePicker> = ({
             setShowMonthYear={setShowMonthYear}
           />
         )}
-        <DatePickerCalendar
+        <PickerCalendar
           shownDate={selectedDate}
           startOfWeek={startOfWeek}
           setStartOfWeek={setNumberStartOfWeek}
