@@ -1,4 +1,4 @@
-import { WeekendStatusEnum } from '../components/Toggle/interface';
+import { WeekendStatusEnum } from '../constants/enums';
 import { IHolidays } from '../pickers/DatePicker/interfaces';
 
 import {

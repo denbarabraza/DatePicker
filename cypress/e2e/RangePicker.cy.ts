@@ -29,7 +29,7 @@ describe('DatePicker', () => {
   });
 
   it('when you click on the " Clear the range " button , the range should clear', () => {
-    cy.get('.sc-hBhlLA').should('be.visible').click();
+    cy.get('.sc-dmsloy').should('be.visible').click();
     cy.get('[data-testid="calendarItem"] > :nth-child(4) > :nth-child(1)').should(
       'have.css',
       'background-color',

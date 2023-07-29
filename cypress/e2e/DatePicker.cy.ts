@@ -1,7 +1,5 @@
 import { cy } from 'local-cypress';
 
-import { usedColors } from '../../src/theme/theme';
-
 const dayjs = require('dayjs');
 
 describe('DatePicker', () => {
@@ -11,7 +9,7 @@ describe('DatePicker', () => {
     );
   });
   it('the elements of the BankCard page should be visible', () => {
-    cy.get('.sc-cxhXjG').should('be.visible');
+    cy.get('.sc-ftDPCE').should('be.visible');
     cy.get('.sc-gLfKCG').should('be.visible');
     cy.get('[data-testid="selectorItem"]').should('be.visible');
     cy.get('[data-testid="calendarItem"] ').should('be.visible');
@@ -27,11 +25,11 @@ describe('DatePicker', () => {
   });
 
   it('when you click on the filter icon, a window opens and the number of days (without days off) should change', () => {
-    cy.get('.sc-gLfKCG').children().should('have.length', 7);
+    cy.get('.sc-ipUqZP').children().should('have.length', 7);
     cy.get('[data-testid="filterIconBlock"]>svg').should('be.visible').click();
     cy.get('[data-testid="displayFilter"]').should('be.visible');
-    cy.get('.sc-ikRtCJ').should('be.visible').click();
-    cy.get('.sc-gLfKCG').children().should('have.length', 5);
+    cy.get('.sc-bZcisz').should('be.visible').click();
+    cy.get('.sc-ipUqZP').children().should('have.length', 5);
   });
 
   it('when you click on the date, you should be able to select the year and month (select)', () => {
@@ -73,9 +71,9 @@ describe('DatePicker', () => {
     cy.get('[data-cy="inputItemTask"]').type(task);
   });
   it('when you click on the day, the starting day of the week should change', () => {
-    cy.get('.sc-gLfKCG').children().eq(0).should('have.text', 'Mo');
-    cy.get('.sc-gLfKCG').children().eq(3).click();
-    cy.get('.sc-gLfKCG').children().eq(0).should('have.text', 'Th');
+    cy.get('.sc-ipUqZP').children().eq(0).should('have.text', 'Mo');
+    cy.get('.sc-ipUqZP').children().eq(3).click();
+    cy.get('.sc-ipUqZP').children().eq(0).should('have.text', 'Th');
   });
 
   it('the background-color of the selected date should be rgb(109, 159, 232)', () => {
