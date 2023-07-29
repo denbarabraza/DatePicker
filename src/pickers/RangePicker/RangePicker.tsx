@@ -59,6 +59,7 @@ export const RangePicker: FC<IRangePicker> = ({
           />
         )}
         <PickerCalendar
+          selectedDate={selectedDate}
           shownDate={selectedDate}
           startOfWeek={startOfWeek}
           setStartOfWeek={setNumberStartOfWeek}
