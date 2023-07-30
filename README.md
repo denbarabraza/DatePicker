@@ -1,116 +1,139 @@
-# Tестовое задание библиотека Modsen DatePicker
+# denbarabraza_daterange_picker
 
-## Содержание
+This library that provides built components for working with different calendars
 
-- [Техническое задание](#Техническое-задание)
-- [Используемые технологии](#Используемые-технологии)
-- [Структура проекта](#Структура-проекта)
-- [Тестирование](#Тестирование)
-- [Полезные ссылки](#Полезные-ссылки)
+It has two components: DatePicker and RangePicker...
 
-## Техническое задание
+## Demo
 
-Необходимо реализовать библиотеку Javascript - ***DatePicker***, для работы с различными видами календаря.
-Цель состоит в том, чтобы создать базовую библиотеку, которую можно настраивать и расширять.
+[Online demo](https://denbarabraza-picker.vercel.app) is also available! you can run demo on your local with:
 
-#### Необходимый функционал:
+- `git clone https://github.com/denbarabraza/DatePicker.git`
+- `yarn && yarn run storybook`
+- Visit http://localhost:6006/
 
-- Просмотр календаря;
-- Выбор диапазона для календаря;
-- Дефолтный календарь с заранее установленным диапазоном;
-- Возможность выбора начала недели(с понедельника или воскресенья);
-- Выбор вида календаря (по неделям, месяцам и т.д.);
-- Реализовать возможность при клике на определенный день добавлять список задач и
-сохранять их в localStorage;
-- Возможность переключения на предыдущий(ую)/следующий(ую) неделю/месяц/год;
-- Возможность выбора максимальной даты календаря;
-- Возможность выбора минимальной даты для календаря;
-- Возможность скрывать/показывать выходные дни и выделять праздничные дни другим цветом;
-- Возможность перейти в календаре на введенную пользователем дату;
-- Стилизация календаря.
+## Getting started
 
-#### Дополнительный функционал:
+### Compatibility
 
-- Развернуть приложение на хостинге (heroku, vercel);
-- Настроить CI/CD, используя [GitHub Actions](https://github.com/features/actions);
-- Собрать проект с нуля(с настройками всех конфигов: rollup, eslint, prettier, husky).
+Your project needs to use React 16 or later. If you use older version of React.
 
-#### Пример графического представления:
+### Installation
 
-Ссылка на
-макет: [Макет "DatePicker"](https://www.figma.com/file/PGg4P38QaPjUzasxC2GSkv/Modsen-Datepicker?node-id=0%3A1&t=dWZj8oM41qBje0bv-0).
+`npm install react-trip-date`
 
-#### Также проект предполагает:
+`yarn add react-trip-date`
 
-- Придерживаться требований по написанию и организации кода react приложения. Ссылка на
-  требования: [Требования к тестовому заданию](https://github.com/annaprystavka/requirements);
+## User guide
 
-- Разделить библиотеку на два основных компонента: представления и логики. Для реализации логики приложения необходимо
-  использовать порождающий паттерн программирования ***"Декоратор"***, который позволяет динамически добавлять объектам
-  новую функциональность, оборачивая их в полезные «обёртки» (см.
-  подробнее [паттерн Декоратор](https://refactoring.guru/ru/design-patterns/decorator)). При помощи паттерна создать
-  сервисный класс, в котором вы будете задавать конфигурацию и создавать календарь;
+### DatePicker
 
-- Настроить конфигурации ***babel***, ***eslint***, ***prettier***;
+- Calendar view;
+- Ability to choose the beginning of the week;
+- The ability to select the year /month for the calendar ;
+- The ability to add a list of tasks when clicking on a certain day and save them to localStorage;
+- Ability to hide/show weekends;
+- The ability to switch in the calendar to the date entered by the user;
+- Calendar styling.
 
-- Подключить и настроить бандлер ***Rollup*** для сборки проекта в библиотеку;
+Example:
 
-- Подключить и настроить ***Storybook*** для проверки работоспособности вашей библиотеки;
+``` jsx
+import { DatePicker } from 'denbarabraza_daterange_picker';
 
-- Добавить обработку ошибок через паттерн ***Error Boundaries***;
+export const App = () => {
+const [date, setDate] = useState<Dayjs>(dayjs());
 
-- Добавить проверку типов в React компонентах, передаваемых параметров и подобных объектов;
+const handleDateChange = (date: Dayjs) => {
+setDate(date);
+};
 
-- Использовать алиасы для импортирования файлов;
+return (
+    <>
+        <h4>Picked Date: {date?.format('DD - MMMM - YYYY')}</h4>
+        <DatePicker selectedDate={date} onChangeDate={handleDateChange} />
+    </>
+    );
+};
+```
 
-- В приложении допускается использование языка typescript;
+Props:
 
-- Нельзя использовать какие-либо сторонние библиотеки.
+``` jsx
+    selectedDate: Dayjs;
+    onChangeDate: (date: Dayjs) => void
+```
 
-## Используемые технологии
+![Demo GIF DatePicker](https://imgur.com/A9NBbyC)
 
-### Для react
+### RangePicker
 
-- ***node.js*** - программная платформа, основанная на движке V8 (транслирующем JavaScript в машинный код);
-- ***babel*** - транспайлер, преобразующий код из одного стандарта в другой;
-- ***eslint*** - линтер для JavaScript кода;
-- ***yarn*** - менеджер пакетов;
-- ***rollup*** - сборщик ES-модулей;
-- ***storybook*** - инструмент, используемый для разработки компонентов пользовательского интерфейса в изоляции;
-- ***react*** - JavaScript-библиотека для создания пользовательских интерфейсов;
-- ***prop-types*** - набор валидаторов, которые могут быть использованы для проверки получаемых данных;
-- ***styled-components*** - система стилизации react компонентов;
-- ***jest*** — интеграционное тестирование (rtl) + unit-тестирование.
+- Calendar view;
+- Selecting a range for the calendar;
+- Ability to switch to the previous (th)/next (th) week/month/year;
+- Ability to select the maximum calendar date;
+- Ability to select the minimum date for the calendar;
+- Calendar styling.
 
-### Для react native
+Example:
 
-Will be soon...
+``` jsx
+import { RangePicker } from 'denbarabraza_daterange_picker';
 
-## Структура проекта
+export const App = () => {
+  const [date, setDate] = useState<Dayjs>(dayjs());
+  const [rangeDays, setRangeDays] = useState<IRangeDateObj>({
+    from: '',
+    to: '',
+  });
 
-[Структура проекта](https://github.com/mkrivel/structure)
+  const handleDateChange = (date: Dayjs) => {
+    setDate(date);
+  };
+  const handleRangeDateChange = (date: IRangeDateObj) => {
+    setRangeDays(date);
+  };
 
-## Тестирование
+  return (
+    <>
+      {rangeDays.from && rangeDays.to && (
+        <h4>
+          Range: {rangeDays.from} / {rangeDays.to}
+        </h4>
+      )}
+      <RangePicker
+        selectedDate={date}
+        onChangeDate={handleDateChange}
+        onChangeRange={handleRangeDateChange}
+      />
+    </>
+  );
+};
+```
 
-Реализовать e2e тестирование c полным покрытием функционала приложения:
+Props:
 
-- Сервис для конфигурации DatePicker-компонента;
-- Графическое (компонент модуля и т.д.).
+``` jsx
+  selectedDate: Dayjs;
+  onChangeDate: (date: Dayjs) => void;
+  onChangeRange: (date: IRangeDateObj) => void;
+```
 
-## Полезные ссылки
+Type:
 
-[React](https://reactjs.org/docs/getting-started.html)
+``` jsx
+interface IRangeDateObj {
+  from: string;
+  to: string;
+}
+```
 
-[Rollup](https://rollupjs.org/guide/en/)
+![Demo GIF RangePicker](https://imgur.com/B6MpCJ7)
 
-[Storybook](https://storybook.js.org/docs/basics/introduction/)
+### APIs
 
-[Eslint](https://eslint.org/docs/user-guide/configuring)
+For [Date Picker](https://denbarabraza-picker.vercel.app/?path=/story/reactcomponentlibrary-datepicker--date-picker-stories)
+and [Range Picker](https://denbarabraza-picker.vercel.app/?path=/story/reactcomponentlibrary-rangepicker--range-picker-stories).
 
-[Babel](https://babeljs.io/docs/en/configuration)
 
-[Тестирование Jest](https://jestjs.io/ru/docs/getting-started)
 
-[Styled-components](https://www.styled-components.com/docs)
-
-[Husky](https://dev.to/ivadyhabimana/setup-eslint-prettier-and-husky-in-a-node-project-a-step-by-step-guide-946)
