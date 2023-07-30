@@ -64,7 +64,7 @@ Props:
     onChangeDate: (date: Dayjs) => void
 ```
 
-![Demo GIF DatePicker](https://imgur.com/A9NBbyC)
+![Demo GIF DatePicker](<img src="https://imgur.com/A9NBbyC"/>)
 
 ### RangePicker
 
@@ -128,7 +128,7 @@ interface IRangeDateObj {
 }
 ```
 
-![Demo GIF RangePicker](https://imgur.com/B6MpCJ7)
+![Demo GIF RangePicker](<img src="https://imgur.com/B6MpCJ7"/> )
 
 ### APIs
 
