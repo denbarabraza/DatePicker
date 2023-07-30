@@ -1,4 +1,4 @@
-# denbarabraza_daterange_picker
+# barabraza_daterange_picker
 
 This library that provides built components for working with different calendars
 
@@ -39,7 +39,7 @@ Your project needs to use React 16 or later. If you use older version of React.
 Example:
 
 ``` jsx
-import { DatePicker } from 'denbarabraza_daterange_picker';
+import { DatePicker } from 'barabraza_daterange_picker';
 
 export const App = () => {
 const [date, setDate] = useState<Dayjs>(dayjs());
@@ -76,7 +76,7 @@ Props:
 Example:
 
 ``` jsx
-import { RangePicker } from 'denbarabraza_daterange_picker';
+import { RangePicker } from 'barabraza_daterange_picker';
 
 export const App = () => {
   const [date, setDate] = useState<Dayjs>(dayjs());
