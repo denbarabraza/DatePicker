@@ -20,9 +20,9 @@ Your project needs to use React 16 or later. If you use older version of React.
 
 ### Installation
 
-`npm install react-trip-date`
+`npm install barabraza_daterange_picker`
 
-`yarn add react-trip-date`
+`yarn add barabraza_daterange_picker`
 
 ## User guide
 
