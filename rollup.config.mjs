@@ -44,6 +44,7 @@ export default [
       terser(),
       dotenv(),
       replace({
+        preventAssignment: true,
         'process.env.CALENDAR_API_KEY': JSON.stringify(process.env.CALENDAR_API_KEY),
       }),
     ],
